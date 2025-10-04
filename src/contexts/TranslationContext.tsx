@@ -564,8 +564,8 @@ const translations = {
     'app.select.desc':
       'Click on the map to choose a location. Then pick a date to get a forecast.',
     'app.location.title': 'Location',
-    'app.lat': 'Lat:',
-    'app.lng': 'Lng:',
+    'app.lat': 'Latitude:',
+    'app.lng': 'Longitude:',
     'app.date': 'Date',
     'app.result.title': 'Forecast',
     'app.result.targetDate': 'Target Date:',

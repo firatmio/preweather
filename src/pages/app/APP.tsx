@@ -14,7 +14,7 @@ import {
 import { MdSunny } from 'react-icons/md';
 import { PiSparkleFill, PiSunHorizonBold } from 'react-icons/pi';
 import { TiArrowLeftThick } from 'react-icons/ti';
-import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import { Link, useSearchParams } from 'react-router';
 import { ClimateModal } from '../../components/ClimateModal';
 import PwDatePicker from '../../components/DatePicker/DatePicker';
@@ -309,6 +309,25 @@ export default function APP() {
         }
       },
     })
+    return null
+  }
+
+  // Auto-center map when URL has coordinates
+  function MapAutoCenter({ point }: { point: SelectedPoint | null }) {
+    const map = useMap()
+    const hasAutoCentered = useRef(false)
+
+    useEffect(() => {
+      // Only auto-center once on initial load if URL has coordinates
+      if (point && !hasAutoCentered.current) {
+        map.setView([point.lat, point.lng], 8, {
+          animate: true,
+          duration: 1
+        })
+        hasAutoCentered.current = true
+      }
+    }, [point, map])
+
     return null
   }
 
@@ -1594,7 +1613,7 @@ export default function APP() {
         <MapContainer
           center={[39.0, 33.0]}
           zoom={6.45}
-          minZoom={4}
+          minZoom={3}
           maxZoom={18}
           zoomControl={true}
           className="leaflet-host apple-dark"
@@ -1607,6 +1626,7 @@ export default function APP() {
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           />
           <ClickCapture />
+          <MapAutoCenter point={point} />
           {point && (
             <Marker
               position={[point.lat, point.lng]}

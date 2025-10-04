@@ -120,7 +120,7 @@ export const ClimateModal: React.FC<ClimateModalProps> = ({ open, onClose, data,
     });
     ctx.fillStyle = '#fff8';
     ctx.font = '15px sans-serif';
-    const numPoints = 10;
+    const numPoints = 15;
     for (let i = 0; i < numPoints; i++) {
       const value = globalMin + (globalMax - globalMin) * (i / (numPoints - 1));
       const yPos = H - pad - ((value - globalMin) / (globalMax - globalMin || 1)) * (H - 2 * pad);
