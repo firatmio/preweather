@@ -1,3 +1,112 @@
+/* İklim Bilgisi Modalı */
+.climate-modal-overlay {
+  position: fixed;
+  z-index: 99999;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(20,20,30,0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn .2s;
+}
+.climate-modal {
+  background: #23242a;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px #0008;
+  padding: 2.2rem 2.2rem 1.2rem 2.2rem;
+  min-width: 340px;
+  max-width: 98vw;
+  max-height: 92vh;
+  overflow: auto;
+  position: relative;
+}
+.climate-modal-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  background: #222a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border: none;
+  font-size: 2.1rem;
+  border-radius: .5rem;
+  cursor: pointer;
+  transition: background .18s;
+  z-index: 2;
+}
+.climate-modal-close:hover {
+  background: #d32f2f;
+}
+.climate-modal h2 {
+  color: #fff;
+  font-size: 1.35rem;
+  margin-bottom: 1.2rem;
+}
+.climate-modal canvas {
+  display: block;
+  margin: 0 auto;
+  background: #222;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0006;
+}
+.climate-btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: .6rem;
+  width: 100%;
+  padding: 0.6rem 1.4rem;
+  font-size: 1.08rem;
+  font-weight: 500;
+  margin-top: 0.7rem;
+  cursor: pointer;
+  transition: background .18s;
+  box-shadow: 0 1px 6px #0002;
+}
+.climate-btn:hover {
+  background: #1256a6;
+}
+/* Geçici bilgi bloğu (info-blob) */
+.info-blob {
+  position: fixed;
+  top: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  min-width: 220px;
+  max-width: 90vw;
+  padding: 1rem 2.2rem;
+  border-radius: 1.5rem;
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: #fff;
+  background: #2a2a2aee;
+  box-shadow: 0 2px 16px 0 #0005;
+  opacity: 1;
+  animation: infoBlobFade 2.5s cubic-bezier(.4,1.6,.6,1) forwards;
+  pointer-events: none;
+  text-align: center;
+}
+.info-blob.warn {
+  background: #e6b800ee;
+  color: #222;
+}
+.info-blob.error {
+  background: #d32f2fee;
+  color: #fff;
+}
+.info-blob.info {
+  background: #1976d2ee;
+  color: #fff;
+}
+@keyframes infoBlobFade {
+  0% { opacity: 0; transform: translateX(-50%) scale(.95); }
+  10% { opacity: 1; transform: translateX(-50%) scale(1.03); }
+  90% { opacity: 1; transform: translateX(-50%) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) scale(.97); }
+}
 /* Preload aşaması: metin ve arkaplan geçişlerinde FOUC azaltma */
 body.preload * {
   transition: none !important;
@@ -170,7 +279,7 @@ body.preload .addr-display:before {
 
 .select-core h3 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.35rem;
   font-weight: 600;
   letter-spacing: 0.5px;
   background: linear-gradient(90deg, #ffffff 0%, #d4dce2 100%);
@@ -181,7 +290,7 @@ body.preload .addr-display:before {
 
 .select-core p {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   line-height: 1.45;
   opacity: 0.7;
   letter-spacing: 0.3px;
@@ -289,7 +398,7 @@ body.preload .addr-display:before {
   position: absolute;
   right: 1rem;
   bottom: 1rem;
-  z-index: 999;
+  z-index: 4;
 }
 
 .result-block h3 {
@@ -386,8 +495,8 @@ body.preload .addr-display:before {
   flex: 1;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #e6edf3;
-  font-size: 0.58rem;
+  color: white;
+  font-size: 0.75rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   padding: 0.55rem 0.65rem;
@@ -397,7 +506,7 @@ body.preload .addr-display:before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   transition: background 0.25s ease, border-color 0.25s ease,
     transform 0.25s ease;
 }
@@ -410,15 +519,17 @@ body.preload .addr-display:before {
 }
 .dl-btn.csv {
   background: linear-gradient(135deg, #1e2934, #162029);
+  transition: all .25s ease;
 }
 .dl-btn.csv:hover {
   background: linear-gradient(135deg, #263543, #1d2731);
 }
 .dl-btn.json {
-  background: linear-gradient(135deg, #31261c, #261b12);
+  background: linear-gradient(135deg, #1e2934, #162029);
+    transition: all .25s ease;
 }
 .dl-btn.json:hover {
-  background: linear-gradient(135deg, #3d2f23, #2d2118);
+  background: linear-gradient(135deg, #263543, #1d2731);
 }
 
 .advice-block {
@@ -566,7 +677,7 @@ body.preload .addr-display:before {
   flex-direction: column;
   gap: 0.35rem;
 }
-.advice-list.kv li {
+.advice-list.kv div {
   font-size: 0.58rem;
 }
 .advice-list.kv li strong {
@@ -622,7 +733,7 @@ body.preload .addr-display:before {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 .kv span {
   opacity: 0.6;
@@ -746,7 +857,7 @@ body.preload .addr-display:before {
   display: block;
   margin-top: 0.4rem;
   opacity: 0.45;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   letter-spacing: 0.5px;
 }
 
@@ -779,6 +890,10 @@ body.preload .addr-display:before {
 .predict-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+.spin {
+  animation: spin 1.15s linear infinite;
 }
 
 .predict-btn .spin {
@@ -825,7 +940,6 @@ body.preload .addr-display:before {
   font-weight: 600;
   opacity: 0.85;
   margin-bottom: 0.55rem;
-  flex-wrap: wrap;
 }
 .readable-head > span {
   flex: 1 1 auto;
@@ -843,6 +957,7 @@ body.preload .addr-display:before {
   font-style: normal;
   font-weight: 600;
   flex-direction: row;
+  min-width: fit-content;
 }
 .readable-list {
   list-style: none;
@@ -912,7 +1027,7 @@ body.preload .addr-display:before {
   flex-wrap: wrap;
 }
 .unit-toggle-row .ut-label {
-  font-size: 0.55rem;
+  font-size: 0.75rem;
   font-weight: 600;
   opacity: 0.7;
   text-transform: uppercase;
@@ -934,7 +1049,7 @@ body.preload .addr-display:before {
   background: transparent;
   color: #c9d3db;
   padding: 0.34rem 0.65rem 0.32rem;
-  font-size: 0.55rem;
+  font-size: 0.7rem;
   letter-spacing: 0.55px;
   cursor: pointer;
   font-weight: 600;
@@ -948,7 +1063,7 @@ body.preload .addr-display:before {
   color: #fff;
 }
 .ut-switch button.on {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background-color: rgba(37, 99, 235, 0.65);
   color: #fff;
   box-shadow: 0 2px 10px -4px rgba(37, 99, 235, 0.55),
     0 0 0 1px rgba(255, 255, 255, 0.05);
@@ -959,14 +1074,6 @@ body.preload .addr-display:before {
 }
 .ut-switch button:active {
   transform: translateY(1px);
-}
-@media (max-width: 560px) {
-  .unit-toggle-row {
-    gap: 0.4rem;
-  }
-  .ut-switch button {
-    padding: 0.3rem 0.55rem;
-  }
 }
 .readable-empty {
   font-size: 0.6rem;
@@ -984,11 +1091,13 @@ body.preload .addr-display:before {
   padding: 0.5rem 0.6rem;
   border-radius: 8px;
   margin-bottom: 0.6rem;
+  display: none;
 }
 .error-box.warn {
   background: #9d6a00;
   color: #fff6df;
-  box-shadow: 0 0 0 1px rgba(255,200,120,0.25), 0 6px 18px -8px rgba(255,180,60,0.5);
+  box-shadow: 0 0 0 1px rgba(255, 200, 120, 0.25),
+    0 6px 18px -8px rgba(255, 180, 60, 0.5);
 }
 .error-box .err-ic {
   margin-right: 0.45rem;
@@ -1241,7 +1350,11 @@ body.preload .addr-display:before {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 420px;
+  font-size: 0.75rem;
+  max-width: 500px;
+  min-width: 250px;
+  flex: 1;
+  text-align: center;
 }
 .addr-spinner {
   width: 14px;
@@ -1279,16 +1392,16 @@ body.preload .addr-display:before {
   border-radius: 10px;
   padding: 0.55rem 0.7rem;
   color: #fff;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   letter-spacing: 0.4px;
   outline: none;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 .addr-shortcut-hint {
   position: absolute;
-  top: 1.22rem;
-  right: 1.2rem;
-  font-size: 0.52rem;
+  top: 1.275rem;
+  right: 1.275rem;
+  font-size: 0.65rem;
   letter-spacing: 0.6px;
   background: rgba(255, 255, 255, 0.12);
   padding: 0.25rem 0.4rem 0.22rem;
@@ -1320,6 +1433,7 @@ body.preload .addr-display:before {
   letter-spacing: 0.35px;
   cursor: pointer;
   transition: background 0.25s ease, border-color 0.25s ease;
+  font-size: 0.75rem;
 }
 .addr-sugg:hover {
   background: rgba(255, 255, 255, 0.09);
@@ -1456,13 +1570,14 @@ body.preload .addr-display:before {
 
 .metrics-list {
   margin-top: 0.6rem;
+  min-width: 350px;
 }
 .metrics-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.75rem;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   opacity: 0.8;
@@ -1473,7 +1588,7 @@ body.preload .addr-display:before {
   color: #dce3ea;
   padding: 0.25rem 0.55rem;
   border-radius: 6px;
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   cursor: pointer;
   transition: background 0.25s ease, border-color 0.25s ease;
 }
@@ -1487,7 +1602,7 @@ body.preload .addr-display:before {
   padding: 0;
   display: flex;
   flex-direction: column;
-  max-height: 220px;
+  max-height: 300px;
   overflow: auto;
   gap: 0.5rem;
 }
@@ -1507,7 +1622,7 @@ body.preload .addr-display:before {
   align-items: center;
   gap: 0.55rem;
   padding: 0.4rem 0.55rem;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   cursor: pointer;
 }
 .metrics-list li span {
@@ -1516,7 +1631,7 @@ body.preload .addr-display:before {
 }
 .metrics-list li em {
   font-style: normal;
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   opacity: 0.65;
 }
 .metrics-list input[type='checkbox'] {
@@ -1618,49 +1733,4 @@ body.preload .addr-display:before {
   left: 1.25rem;
   right: 1.25rem;
   bottom: 1.25rem;
-}
-
-@media (max-width: 1080px) {
-  .app-sidebar {
-    width: 300px;
-  }
-}
-@media (max-width: 860px) {
-  .app-shell {
-    flex-direction: column;
-  }
-  .app-sidebar {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .location-block,
-  .date-block,
-  .action-block,
-  .result-block {
-    flex: 1;
-    min-width: 180px;
-  }
-  .sidebar-footer {
-    width: 100%;
-  }
-  .app-map-wrapper {
-    height: calc(100vh - 300px);
-  }
-}
-@media (max-width: 560px) {
-  .app-sidebar {
-    padding: 1rem 0.9rem;
-  }
-  .location-block,
-  .date-block,
-  .action-block,
-  .result-block {
-    min-width: 140px;
-  }
-  .map-overlay-text {
-    font-size: 0.6rem;
-  }
 }

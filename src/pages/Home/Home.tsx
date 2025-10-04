@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { FaArrowRight, FaBrain, FaChartLine, FaRocket } from 'react-icons/fa'
 import { TiWeatherCloudy } from 'react-icons/ti'
 import { Link } from 'react-router-dom'
@@ -7,19 +6,10 @@ import './Home.css'
 
 export default function Home() {
   const { t } = useTranslation();
-  const bgImages = useMemo(() => [
-    'https://images.pexels.com/photos/3106799/pexels-photo-3106799.jpeg?cs=srgb&dl=pexels-sidesimagery-3106799.jpg&fm=jpg',
-    'https://www.hdwallpapers.in/download/red_black_clouds_sky_sunset_dark_nature_wallpaper_background_4k_hd_dark_background-HD.jpg',
-    'https://images.pexels.com/photos/12219473/pexels-photo-12219473.jpeg',
-    'https://img.freepik.com/free-photo/beautiful-view-sunset-sea_181624-59229.jpg?t=st=1759516717~exp=1759520317~hmac=135be5559d59ca86f12ce9afe7c67f012125b7c388d88757e2990041de757e6a&w=2000',
-    'https://img.freepik.com/free-photo/beautiful-view-sky-sunset-beach_158538-26143.jpg?t=st=1759516768~exp=1759520368~hmac=3cd876f038ab67ff5935b1c0a1c267940a99da981c4bc370d1d393052777f47e&w=2000',
-    'https://img.freepik.com/free-photo/vibrant-sunset-rural-forest-meadow-generated-by-ai_188544-42453.jpg?t=st=1759516800~exp=1759520400~hmac=62fcdcf79b24ca7a6644e08e20eca8b5a9d4047ef39eaa0ab62768cd8dd3f756&w=2000'
-  ], [])
-  const selected = useMemo(() => bgImages[Math.floor(Math.random()*bgImages.length)], [bgImages])
-
+  
   return (
     <div className="home-page">
-      <div className="background" style={{ backgroundImage: `url(${selected})` }}></div>
+      <div className="background" ></div>
       <section className="hero">
         <div className="hero-content">
           <div className="hero-badge">

@@ -20,7 +20,8 @@
   margin-top: 0rem;
 }
 
-.footer.home svg, .footer svg {
+.footer.home svg,
+.footer svg {
   width: 18px;
   height: 18px;
 }
