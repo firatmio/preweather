@@ -3,13 +3,13 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineLoading } from 'react-icons/ai';
 import { FaDownload, FaRegSnowflake } from 'react-icons/fa';
 import {
-    FaCloudRain,
-    FaExclamation,
-    FaLocationDot,
-    FaSnowflake,
-    FaTemperatureHalf,
-    FaWater,
-    FaWind,
+  FaCloudRain,
+  FaExclamation,
+  FaLocationDot,
+  FaSnowflake,
+  FaTemperatureHalf,
+  FaWater,
+  FaWind,
 } from 'react-icons/fa6';
 import { MdSunny } from 'react-icons/md';
 import { PiSparkleFill, PiSunHorizonBold } from 'react-icons/pi';
@@ -423,19 +423,6 @@ export default function APP() {
     }
   }
 
-  const toggleMetric = (metric: string) => {
-    setMetricsEnabled((prev) => ({ ...prev, [metric]: !prev[metric] }))
-    setActiveMetric((m) => (m === metric ? null : metric))
-  }
-
-  const toggleAll = () => {
-    const allEnabled = Object.values(metricsEnabled).every((v) => v)
-    const next: Record<string, boolean> = {}
-    metricsList.forEach((m) => (next[m] = !allEnabled))
-    setMetricsEnabled(next)
-    setActiveMetric(null)
-  }
-
   const convertTemp = (c: number | null | undefined) => {
     if (c == null || isNaN(c)) return null
     return tempUnit === 'C' ? c : (c * 9) / 5 + 32
@@ -532,6 +519,12 @@ export default function APP() {
     const targetLang = 'EN'
     const AUTH_KEY = import.meta.env.VITE_AUTH_KEY as string;
 
+    if (!AUTH_KEY) {
+      console.error('VITE_AUTH_KEY is not defined in environment variables')
+      setAdviceParts(parts) // Keep original Turkish text
+      return
+    }
+
     setAdviceTranslating(true)
     setAdviceParts([])
 
@@ -557,14 +550,19 @@ export default function APP() {
             body: params.toString(),
             signal: controller.signal,
           })
-          if (!res.ok) throw new Error('translate_http_' + res.status)
+          if (!res.ok) {
+            const errorData = await res.json().catch(() => ({}))
+            console.error('Translation API error:', res.status, errorData)
+            throw new Error('translate_http_' + res.status)
+          }
           const data = await res.json()
           const translated = data?.translations?.[0]?.text
           if (typeof translated === 'string' && translated.length) {
             adviceTranslationCacheRef.current.set(cacheKey, translated)
             return { ...part, content: translated }
           }
-        } catch {
+        } catch (err) {
+          console.error('Translation failed for part:', part.labelKey, err)
         }
         return part
       }),
@@ -1348,71 +1346,6 @@ export default function APP() {
               </>
             )}
           </aside>
-        )
-      })()}
-      {(() => {
-        const hasValidPoint = !!point && !addrInvalid
-        return (
-          hasValidPoint && (
-            <>
-              {result && (
-                <div className="result-block">
-                  <div className="metrics-list">
-                    <div className="metrics-head">
-                      <span>{t('app.results.metrics')}</span>
-                      <button
-                        className="toggle-all"
-                        onClick={toggleAll}
-                      >
-                        {t('app.results.toggleAll')}
-                      </button>
-                    </div>
-                    <ul>
-                      {metricsList.map((m) => {
-                        const descMap: Record<string, string> = {
-                          T2M: 'metricDesc.T2M',
-                          T2M_MAX: 'metricDesc.T2M_MAX',
-                          T2M_MIN: 'metricDesc.T2M_MIN',
-                          WS2M: 'metricDesc.WS2M',
-                          PRECTOTCORR: 'metricDesc.PRECTOTCORR',
-                          SNODP: 'metricDesc.SNODP',
-                          RH2M: 'metricDesc.RH2M',
-                          ALLSKY_KT: 'metricDesc.ALLSKY_KT',
-                        }
-                        const desc = descMap[m] ? t(descMap[m]) : undefined
-                        return (
-                          <li
-                            key={m}
-                            className={metricsEnabled[m] ? 'on' : ''}
-                            title={desc}
-                          >
-                            <label>
-                              <input
-                                type="checkbox"
-                                checked={!!metricsEnabled[m]}
-                                onChange={() => toggleMetric(m)}
-                              />
-                              <span>
-                                {t(`metric.${m}`)
-                                  .replace(/\s*\(.*?\)\s*/g, '')
-                                  .trim()}
-                              </span>
-                              <em>
-                                {result.prediction_data[m]?.percentage?.toFixed(
-                                  2,
-                                )}
-                                %
-                              </em>
-                            </label>
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  </div>
-                </div>
-              )}
-            </>
-          )
         )
       })()}
       <div

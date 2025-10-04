@@ -427,17 +427,6 @@ body.preload .addr-display:before {
     0 4px 12px -2px rgba(240, 85, 20, 0.7);
 }
 
-.metrics-list {
-  display: none;
-  margin-top: 0.4rem;
-  padding: 0.6rem 0.65rem 0.7rem;
-  background: rgba(255, 255, 255, 0.035);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  animation: fadeUp 0.2s ease-out;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-}
 @keyframes fadeUp {
   0% {
     transform: translateY(50%) scale(0.8);

@@ -31,8 +31,27 @@ export default async function handler(
       text = req.body.text
     }
 
+    console.log('Translation request:', {
+      hasAuthKey: !!auth_key,
+      authKeyLength: auth_key?.length || 0,
+      targetLang: target_lang,
+      textLength: text?.length || 0
+    })
+
     if (!auth_key || !target_lang || !text) {
-      return res.status(400).json({ error: 'Missing required parameters' })
+      console.error('Missing parameters:', { 
+        hasAuthKey: !!auth_key, 
+        hasTargetLang: !!target_lang, 
+        hasText: !!text 
+      })
+      return res.status(400).json({ 
+        error: 'Missing required parameters',
+        details: {
+          hasAuthKey: !!auth_key,
+          hasTargetLang: !!target_lang,
+          hasText: !!text
+        }
+      })
     }
 
     const params = new URLSearchParams()
@@ -49,13 +68,23 @@ export default async function handler(
     })
 
     if (!response.ok) {
-      throw new Error(`DeepL API error: ${response.status}`)
+      const errorText = await response.text()
+      console.error('DeepL API error:', response.status, errorText)
+      return res.status(response.status).json({ 
+        error: 'DeepL API error', 
+        status: response.status,
+        details: errorText 
+      })
     }
 
     const data = await response.json()
     return res.status(200).json(data)
   } catch (error) {
     console.error('Translation error:', error)
-    return res.status(500).json({ error: 'Translation failed' })
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    return res.status(500).json({ 
+      error: 'Translation failed',
+      details: errorMessage 
+    })
   }
 }

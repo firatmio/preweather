@@ -54,7 +54,6 @@ export default function Docs() {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    // Tüm section'ları observe et
     sections.forEach((section) => {
       const element = section.ref.current;
       if (element) {
@@ -68,7 +67,6 @@ export default function Docs() {
     };
   }, [sections]);
 
-  // Scroll to section
   const scrollToSection = (sectionId: string) => {
     const section = sections.find(s => s.id === sectionId);
     section?.ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -77,7 +75,6 @@ export default function Docs() {
   return (
     <div className="docs-page">
       <div className="docs-main">
-        {/* Sidebar */}
         <aside className="docs-sidebar">
           <div className="docs-nav-sticky">
             <h3 className="docs-nav-title">{t('docs.title')}</h3>
@@ -95,9 +92,7 @@ export default function Docs() {
           </div>
         </aside>
 
-        {/* Main Content */}
         <div className="docs-content">
-          {/* --- Intro --- */}
           <section ref={introRef} className="docs-article">
             <h2>{t('docs.intro.title')}</h2>
             <p>{t('docs.intro.p1')}</p>
@@ -105,14 +100,12 @@ export default function Docs() {
             <p>{t('docs.intro.p3')}</p>
           </section>
 
-          {/* --- Getting Started --- */}
           <section ref={startedRef} className="docs-article">
             <h2>{t('docs.started.title')}</h2>
             <p>{t('docs.started.p1')}</p>
             <p>{t('docs.started.p2')}</p>
           </section>
 
-          {/* --- Location --- */}
           <section ref={locationRef} className="docs-article">
             <h2>{t('docs.location.title')}</h2>
             <h3>{t('docs.location.step1')}</h3>
