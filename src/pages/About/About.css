@@ -105,7 +105,6 @@
 
 .about-light .about-section .section-head p {
   color: var(--al-text-dim);
-  max-width: 800px;
   line-height: 1.55;
   font-size: 0.97rem;
 }
