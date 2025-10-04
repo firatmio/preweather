@@ -97,8 +97,135 @@ const translations = {
     'about.call.try': 'Uygulamayı Deneyin',
 
     'docs.title': 'Dokümantasyon',
-    'docs.description':
-      'API kullanımı ve özellikler hakkında detaylı bilgiler.',
+    'docs.subtitle': 'PreWeather uygulamasını kullanarak hava tahmini yapmanın detaylı rehberi',
+    
+    // Docs Navigation
+    'docs.nav.intro': 'Giriş',
+    'docs.nav.started': 'Başlarken',
+    'docs.nav.location': 'Konum Seçimi',
+    'docs.nav.date': 'Tarih Seçimi',
+    'docs.nav.prediction': 'Tahmin Alma',
+    'docs.nav.results': 'Sonuçları Anlama',
+    'docs.nav.metrics': 'Metrikler',
+    'docs.nav.climate': 'İklim Verileri',
+    'docs.nav.export': 'Veri Dışa Aktarma',
+    'docs.nav.tips': 'İpuçları',
+
+    // Introduction Section
+    'docs.intro.title': 'PreWeather Nedir?',
+    'docs.intro.p1': 'PreWeather, NASA POWER API ve Prophet makine öğrenimi modelini kullanarak gelecek tarihler için hava durumu tahminleri yapan gelişmiş bir web uygulamasıdır.',
+    'docs.intro.p2': 'Uygulama, geçmiş meteoroloji verilerini analiz ederek sıcaklık, yağış, nem, rüzgar hızı ve daha fazlası gibi parametreleri tahmin eder.',
+    'docs.intro.p3': 'Tarım, seyahat planlaması ve günlük aktiviteler için güvenilir hava tahminleri sunar.',
+
+    // Getting Started
+    'docs.started.title': 'Başlarken',
+    'docs.started.p1': 'PreWeather kullanmaya başlamak için herhangi bir hesap oluşturmanıza gerek yoktur. Anasayfadan "Tahmine Başla" butonuna tıklayarak doğrudan uygulamaya erişebilirsiniz.',
+    'docs.started.p2': 'Uygulama, interaktif bir harita üzerinde konum seçimi yapmanıza ve istediğiniz tarih için tahmin almanıza olanak tanır.',
+
+    // Location Selection
+    'docs.location.title': 'Konum Seçimi',
+    'docs.location.step1': '1. Harita Üzerinden Seçim',
+    'docs.location.step1.p1': 'Uygulama açıldığında karşınıza interaktif bir harita gelir. Bu harita üzerinde herhangi bir noktaya tıklayarak konum seçebilirsiniz.',
+    'docs.location.step1.p2': 'Tıkladığınız noktada kırmızı bir işaretçi belirir ve seçilen konumun enlem (latitude) ve boylam (longitude) bilgileri gösterilir.',
+    
+    'docs.location.step2': '2. Adres Arama',
+    'docs.location.step2.p1': 'Haritanın üst kısmında bulunan arama kutusunu kullanarak şehir, ilçe veya sokak adı arayabilirsiniz.',
+    'docs.location.step2.p2': 'Yazmaya başladığınızda otomatik olarak öneriler görünür. İstediğiniz konumu seçtiğinizde harita o bölgeye yakınlaşır.',
+    'docs.location.step2.p3': 'Arama kutusu, OpenStreetMap Nominatim API kullanarak dünya çapında konum araması yapar.',
+    
+    'docs.location.step3': '3. Su Kontrolü',
+    'docs.location.step3.p1': 'Bir konum seçtiğinizde sistem, seçilen noktanın deniz, göl veya nehir gibi su kütlesi üzerinde olup olmadığını otomatik kontrol eder.',
+    'docs.location.step3.p2': 'Eğer su üzerinde bir nokta seçtiyseniz ekranın sağ üst köşesinde uyarı mesajı belirir ve tahmin alamazsınız.',
+
+    // Date Selection
+    'docs.date.title': 'Tarih Seçimi',
+    'docs.date.p1': 'Konum seçtikten sonra hangi tarih için tahmin istediğinizi belirlemeniz gerekir.',
+    'docs.date.calendar': 'Takvim Kullanımı',
+    'docs.date.calendar.p1': 'Sağ taraftaki panelde bulunan takvim simgesine tıklayarak tarih seçici açılır.',
+    'docs.date.calendar.p2': 'Sadece bugünden sonraki tarihler seçilebilir. Geçmiş tarihler devre dışıdır.',
+    'docs.date.calendar.p3': 'Maksimum 365 gün ileriye kadar tahmin alabilirsiniz.',
+    'docs.date.format': 'Tarih formatı: GG.AA.YYYY (örn: 15.10.2025)',
+
+    // Prediction
+    'docs.prediction.title': 'Tahmin Alma',
+    'docs.prediction.button': 'Tahmin Et Butonu',
+    'docs.prediction.button.p1': 'Konum ve tarih seçtikten sonra yeşil "Tahmin Et" butonuna tıklayın.',
+    'docs.prediction.button.p2': 'Buton, hem konum hem de tarih seçilene kadar devre dışı kalır ve gri renkte görünür.',
+    'docs.prediction.loading': 'Yükleme Süreci',
+    'docs.prediction.loading.p1': 'Tahmin Et butonuna tıkladığınızda sistem NASA API\'den veri çekmeye başlar.',
+    'docs.prediction.loading.p2': 'Bu işlem genellikle 3-5 saniye sürer. Yükleme animasyonu görürsünüz.',
+    'docs.prediction.loading.p3': 'Yükleme sırasında başka işlem yapamazsınız.',
+
+    // Results
+    'docs.results.title': 'Sonuçları Anlama',
+    'docs.results.panel': 'Sonuç Paneli',
+    'docs.results.panel.p1': 'Tahmin tamamlandığında ekranın sağ tarafında detaylı sonuç paneli açılır.',
+    'docs.results.panel.p2': 'Panel üç ana bölümden oluşur: Genel Bilgiler, Metrik Değerler ve Yapay Zeka Önerileri.',
+    
+    'docs.results.general': 'Genel Bilgiler',
+    'docs.results.general.p1': 'Seçtiğiniz konum (şehir/bölge adı)',
+    'docs.results.general.p2': 'Hedef tarih',
+    'docs.results.general.p3': 'Koordinat bilgileri',
+    
+    'docs.results.weather': 'Hava Durumu Özeti',
+    'docs.results.weather.p1': 'Panelin üst kısmında büyük bir simge ile tahmin edilen hava durumu gösterilir.',
+    'docs.results.weather.p2': 'Simgeler: ☀️ Güneşli, ☁️ Bulutlu, 🌧️ Yağmurlu, ❄️ Karlı',
+    'docs.results.weather.p3': 'Tahmin edilen sıcaklık değeri büyük punto ile gösterilir.',
+
+    // Metrics
+    'docs.metrics.title': 'Metrik Değerleri',
+    'docs.metrics.intro': 'PreWeather 8 farklı meteoroloji metriği tahmin eder:',
+    'docs.metrics.toggle': 'Metrikleri Açma/Kapama',
+    'docs.metrics.toggle.p1': 'Her metriğin yanında bir göz simgesi bulunur.',
+    'docs.metrics.toggle.p2': 'Bu simgeye tıklayarak istediğiniz metriği harita üzerinde renkli katman olarak görüntüleyebilirsiniz.',
+    'docs.metrics.toggle.p3': 'Aynı anda birden fazla metrik açık olabilir.',
+    
+    'docs.metrics.t2m': 'T2M (Sıcaklık): 2 metre yükseklikteki hava sıcaklığı (°C)',
+    'docs.metrics.prec': 'PRECTOTCORR (Yağış): Toplam yağış miktarı (mm/gün)',
+    'docs.metrics.rh': 'RH2M (Nem): 2 metre yükseklikteki bağıl nem (%)',
+    'docs.metrics.ws': 'WS2M (Rüzgar): 2 metre yükseklikteki rüzgar hızı (m/s)',
+    'docs.metrics.qv': 'QV2M (Özgül Nem): Havadaki su buharı miktarı (g/kg)',
+    'docs.metrics.dew': 'T2MDEW (Çiğ Noktası): Çiğlenme sıcaklığı (°C)',
+    'docs.metrics.cloud': 'CLOUD_AMT (Bulutluluk): Bulut miktarı (%)',
+    'docs.metrics.solar': 'ALLSKY_SFC_SW_DWN (Güneş Radyasyonu): Yüzeye ulaşan güneş enerjisi (kWh/m²/gün)',
+
+    // Climate Data
+    'docs.climate.title': 'Geçmiş İklim Verileri',
+    'docs.climate.button': 'İklim Butonu',
+    'docs.climate.button.p1': 'Sonuç panelinin sağ üst köşesinde "Geçmiş Hava Verileri" butonu bulunur.',
+    'docs.climate.button.p2': 'Bu butona tıkladığınızda seçili konum için 1981-2010 yılları arası geçmiş veriler açılır.',
+    
+    'docs.climate.chart': 'Grafik Özellikleri',
+    'docs.climate.chart.p1': 'Sol tarafta her metrik için renkli noktalar ve çizgilerle görselleştirilmiş grafik gösterilir.',
+    'docs.climate.chart.p2': 'Farenizi noktaların üzerine getirdiğinizde detaylı bilgi (metrik adı, değer, yıl) görürsünüz.',
+    'docs.climate.chart.p3': 'Sağ tarafta checkbox listesiyle hangi metrikleri görmek istediğinizi seçebilirsiniz.',
+    
+    'docs.climate.export': 'Grafik İndirme',
+    'docs.climate.export.p1': 'Modalın sağ alt köşesinde PNG ve PDF indirme butonları bulunur.',
+    'docs.climate.export.p2': 'PNG: Grafiği yüksek çözünürlükte görüntü olarak indirir',
+    'docs.climate.export.p3': 'PDF: Grafiği yatay formatta PDF belgesi olarak kaydeder',
+
+    // Export
+    'docs.export.title': 'Veri Dışa Aktarma',
+    'docs.export.json': 'JSON İndirme',
+    'docs.export.json.p1': 'Sonuç panelinin altında "JSON İndir" butonu bulunur.',
+    'docs.export.json.p2': 'Bu buton, tüm tahmin verilerini JSON formatında bilgisayarınıza kaydeder.',
+    'docs.export.json.p3': 'İndirilen dosya şunları içerir: Konum bilgileri, tarih, tüm metrik değerleri, yapay zeka önerileri.',
+    
+    'docs.export.usage': 'JSON Dosyasını Kullanma',
+    'docs.export.usage.p1': 'İndirdiğiniz JSON dosyasını herhangi bir metin editöründe açabilirsiniz.',
+    'docs.export.usage.p2': 'Verileri kendi uygulamalarınızda, Excel\'de veya programlama dillerinde kullanabilirsiniz.',
+
+    // Tips
+    'docs.tips.title': 'İpuçları ve Püf Noktaları',
+    'docs.tips.1': 'Doğru Konum: Hassas tahmin için mümkün olduğunca spesifik konum seçin.',
+    'docs.tips.2': 'Zaman Aralığı: Yakın tarihlerdeki tahminler daha güvenilirdir.',
+    'docs.tips.3': 'Su Kontrol: Kara üzerinde nokta seçtiğinizden emin olun.',
+    'docs.tips.4': 'Metrik Karşılaştırma: Birden fazla metriği harita üzerinde açarak karşılaştırma yapın.',
+    'docs.tips.5': 'Birim Değiştirme: Sağ üst köşedeki butonlarla °C/°F ve m/s/km/h arası geçiş yapabilirsiniz.',
+    'docs.tips.6': 'Veri Saklama: Önemli tahminleri JSON olarak kaydedin.',
+    'docs.tips.7': 'Dil Desteği: Türkçe ve İngilizce arasında geçiş yapabilirsiniz.',
+    'docs.tips.8': 'Mobil Uyumlu: Uygulama telefon ve tablette de sorunsuz çalışır.',
 
     'apis.title': "API'ler",
     'apis.description': "Kullanılabilir NASA API'lerinin listesi.",
@@ -127,7 +254,7 @@ const translations = {
     'app.current.page': 'Bu sayfadasın zaten.',
     'app.results.check': 'Sonuçlar Var mı?',
     'app.results.checking': 'Kontrol Ediliyor...',
-    'app.results.fetch': 'Tahmini Et',
+    'app.results.fetch': 'Tahmin Et',
     'app.results.loading': 'Tahmin Yükleniyor...',
     'app.results.title': 'Tahmin Sonuçları',
     'app.gelismis.title': 'Gelişmiş',
@@ -298,7 +425,135 @@ const translations = {
     'about.call.try': 'Try the App',
 
     'docs.title': 'Documentation',
-    'docs.description': 'Detailed information about API usage and features.',
+    'docs.subtitle': 'Detailed guide to making weather predictions using PreWeather',
+    
+    // Docs Navigation
+    'docs.nav.intro': 'Introduction',
+    'docs.nav.started': 'Getting Started',
+    'docs.nav.location': 'Location Selection',
+    'docs.nav.date': 'Date Selection',
+    'docs.nav.prediction': 'Making Prediction',
+    'docs.nav.results': 'Understanding Results',
+    'docs.nav.metrics': 'Metrics',
+    'docs.nav.climate': 'Climate Data',
+    'docs.nav.export': 'Data Export',
+    'docs.nav.tips': 'Tips',
+
+    // Introduction Section
+    'docs.intro.title': 'What is PreWeather?',
+    'docs.intro.p1': 'PreWeather is an advanced web application that makes weather predictions for future dates using NASA POWER API and Prophet machine learning model.',
+    'docs.intro.p2': 'The application predicts parameters such as temperature, precipitation, humidity, wind speed and more by analyzing historical meteorological data.',
+    'docs.intro.p3': 'It provides reliable weather forecasts for agriculture, travel planning and daily activities.',
+
+    // Getting Started
+    'docs.started.title': 'Getting Started',
+    'docs.started.p1': 'You don\'t need to create an account to start using PreWeather. You can access the application directly by clicking the "Start Predicting" button on the homepage.',
+    'docs.started.p2': 'The application allows you to select a location on an interactive map and get predictions for your desired date.',
+
+    // Location Selection
+    'docs.location.title': 'Location Selection',
+    'docs.location.step1': '1. Selection via Map',
+    'docs.location.step1.p1': 'When the application opens, you will see an interactive map. You can select a location by clicking anywhere on this map.',
+    'docs.location.step1.p2': 'A red marker appears at the clicked point and the latitude and longitude information of the selected location is displayed.',
+    
+    'docs.location.step2': '2. Address Search',
+    'docs.location.step2.p1': 'You can search for city, district or street name using the search box at the top of the map.',
+    'docs.location.step2.p2': 'Suggestions appear automatically as you start typing. When you select the desired location, the map zooms to that area.',
+    'docs.location.step2.p3': 'The search box uses OpenStreetMap Nominatim API for worldwide location search.',
+    
+    'docs.location.step3': '3. Water Check',
+    'docs.location.step3.p1': 'When you select a location, the system automatically checks whether the selected point is on a water body such as sea, lake or river.',
+    'docs.location.step3.p2': 'If you select a point on water, a warning message appears in the top right corner and you cannot get a prediction.',
+
+    // Date Selection
+    'docs.date.title': 'Date Selection',
+    'docs.date.p1': 'After selecting a location, you need to specify which date you want a prediction for.',
+    'docs.date.calendar': 'Using Calendar',
+    'docs.date.calendar.p1': 'Click the calendar icon in the right panel to open the date picker.',
+    'docs.date.calendar.p2': 'Only dates after today can be selected. Past dates are disabled.',
+    'docs.date.calendar.p3': 'You can get predictions up to 365 days ahead.',
+    'docs.date.format': 'Date format: DD.MM.YYYY (e.g: 15.10.2025)',
+
+    // Prediction
+    'docs.prediction.title': 'Making Prediction',
+    'docs.prediction.button': 'Predict Button',
+    'docs.prediction.button.p1': 'After selecting location and date, click the green "Predict" button.',
+    'docs.prediction.button.p2': 'The button remains disabled and appears gray until both location and date are selected.',
+    'docs.prediction.loading': 'Loading Process',
+    'docs.prediction.loading.p1': 'When you click the Predict button, the system starts fetching data from NASA API.',
+    'docs.prediction.loading.p2': 'This process usually takes 3-5 seconds. You will see a loading animation.',
+    'docs.prediction.loading.p3': 'You cannot perform other operations during loading.',
+
+    // Results
+    'docs.results.title': 'Understanding Results',
+    'docs.results.panel': 'Result Panel',
+    'docs.results.panel.p1': 'When the prediction is complete, a detailed results panel opens on the right side of the screen.',
+    'docs.results.panel.p2': 'The panel consists of three main sections: General Information, Metric Values and AI Recommendations.',
+    
+    'docs.results.general': 'General Information',
+    'docs.results.general.p1': 'Selected location (city/region name)',
+    'docs.results.general.p2': 'Target date',
+    'docs.results.general.p3': 'Coordinate information',
+    
+    'docs.results.weather': 'Weather Summary',
+    'docs.results.weather.p1': 'At the top of the panel, the predicted weather is shown with a large icon.',
+    'docs.results.weather.p2': 'Icons: ☀️ Sunny, ☁️ Cloudy, 🌧️ Rainy, ❄️ Snowy',
+    'docs.results.weather.p3': 'The predicted temperature value is shown in large font.',
+
+    // Metrics
+    'docs.metrics.title': 'Metric Values',
+    'docs.metrics.intro': 'PreWeather predicts 8 different meteorological metrics:',
+    'docs.metrics.toggle': 'Toggle Metrics',
+    'docs.metrics.toggle.p1': 'There is an eye icon next to each metric.',
+    'docs.metrics.toggle.p2': 'By clicking this icon, you can view the desired metric as a colored layer on the map.',
+    'docs.metrics.toggle.p3': 'Multiple metrics can be active at the same time.',
+    
+    'docs.metrics.t2m': 'T2M (Temperature): Air temperature at 2 meters height (°C)',
+    'docs.metrics.prec': 'PRECTOTCORR (Precipitation): Total precipitation amount (mm/day)',
+    'docs.metrics.rh': 'RH2M (Humidity): Relative humidity at 2 meters height (%)',
+    'docs.metrics.ws': 'WS2M (Wind): Wind speed at 2 meters height (m/s)',
+    'docs.metrics.qv': 'QV2M (Specific Humidity): Amount of water vapor in air (g/kg)',
+    'docs.metrics.dew': 'T2MDEW (Dew Point): Dew point temperature (°C)',
+    'docs.metrics.cloud': 'CLOUD_AMT (Cloudiness): Cloud amount (%)',
+    'docs.metrics.solar': 'ALLSKY_SFC_SW_DWN (Solar Radiation): Solar energy reaching surface (kWh/m²/day)',
+
+    // Climate Data
+    'docs.climate.title': 'Historical Climate Data',
+    'docs.climate.button': 'Climate Button',
+    'docs.climate.button.p1': 'There is a "Past Weather Data" button in the top right corner of the results panel.',
+    'docs.climate.button.p2': 'When you click this button, historical data from 1981-2010 for the selected location opens.',
+    
+    'docs.climate.chart': 'Chart Features',
+    'docs.climate.chart.p1': 'On the left side, a chart visualized with colored dots and lines for each metric is shown.',
+    'docs.climate.chart.p2': 'When you hover over the dots, you see detailed information (metric name, value, year).',
+    'docs.climate.chart.p3': 'On the right side, you can select which metrics you want to see with a checkbox list.',
+    
+    'docs.climate.export': 'Chart Download',
+    'docs.climate.export.p1': 'There are PNG and PDF download buttons in the bottom right corner of the modal.',
+    'docs.climate.export.p2': 'PNG: Downloads the chart as a high-resolution image',
+    'docs.climate.export.p3': 'PDF: Saves the chart as a PDF document in landscape format',
+
+    // Export
+    'docs.export.title': 'Data Export',
+    'docs.export.json': 'JSON Download',
+    'docs.export.json.p1': 'There is a "Download JSON" button at the bottom of the results panel.',
+    'docs.export.json.p2': 'This button saves all prediction data in JSON format to your computer.',
+    'docs.export.json.p3': 'The downloaded file includes: Location information, date, all metric values, AI recommendations.',
+    
+    'docs.export.usage': 'Using JSON File',
+    'docs.export.usage.p1': 'You can open the downloaded JSON file in any text editor.',
+    'docs.export.usage.p2': 'You can use the data in your own applications, Excel or programming languages.',
+
+    // Tips
+    'docs.tips.title': 'Tips and Tricks',
+    'docs.tips.1': 'Accurate Location: Select a specific location for precise prediction.',
+    'docs.tips.2': 'Time Range: Predictions for nearby dates are more reliable.',
+    'docs.tips.3': 'Water Check: Make sure you select a point on land.',
+    'docs.tips.4': 'Metric Comparison: Compare by opening multiple metrics on the map.',
+    'docs.tips.5': 'Unit Change: You can switch between °C/°F and m/s/km/h with buttons in the top right corner.',
+    'docs.tips.6': 'Data Storage: Save important predictions as JSON.',
+    'docs.tips.7': 'Language Support: You can switch between Turkish and English.',
+    'docs.tips.8': 'Mobile Friendly: The application works smoothly on phone and tablet.',
 
     'apis.title': 'APIs',
     'apis.description': 'List of available NASA APIs.',

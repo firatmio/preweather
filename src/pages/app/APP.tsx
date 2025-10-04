@@ -3,19 +3,19 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineLoading } from 'react-icons/ai';
 import { FaDownload, FaRegSnowflake } from 'react-icons/fa';
 import {
-  FaCloudRain,
-  FaExclamation,
-  FaLocationDot,
-  FaSnowflake,
-  FaTemperatureHalf,
-  FaWater,
-  FaWind,
+    FaCloudRain,
+    FaExclamation,
+    FaLocationDot,
+    FaSnowflake,
+    FaTemperatureHalf,
+    FaWater,
+    FaWind,
 } from 'react-icons/fa6';
 import { MdSunny } from 'react-icons/md';
 import { PiSparkleFill, PiSunHorizonBold } from 'react-icons/pi';
 import { TiArrowLeftThick } from 'react-icons/ti';
 import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { ClimateModal } from '../../components/ClimateModal';
 import PwDatePicker from '../../components/DatePicker/DatePicker';
 import { useTranslation } from '../../contexts/TranslationContext';
@@ -37,14 +37,32 @@ interface GeoSuggestion {
 }
 
 export default function APP() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [climateOpen, setClimateOpen] = useState(false)
   const [infoBlob, setInfoBlob] = useState<{
     msg: string
     type?: 'warn' | 'error' | 'info'
   } | null>(null)
   const { t, language } = useTranslation()
-  const [point, setPoint] = useState<SelectedPoint | null>(null)
-  const [date, setDate] = useState<string>('')
+  
+  // URL'den başlangıç değerlerini al
+  const [point, setPoint] = useState<SelectedPoint | null>(() => {
+    const lat = searchParams.get('lat')
+    const lng = searchParams.get('lng')
+    if (lat && lng) {
+      const latNum = parseFloat(lat)
+      const lngNum = parseFloat(lng)
+      if (!isNaN(latNum) && !isNaN(lngNum)) {
+        return { lat: latNum, lng: lngNum }
+      }
+    }
+    return null
+  })
+  
+  const [date, setDate] = useState<string>(() => {
+    return searchParams.get('date') || ''
+  })
+  
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<any>(null)
   const [checking, setChecking] = useState(false)
@@ -100,6 +118,34 @@ export default function APP() {
       return 'MS'
     }
   })
+
+  // URL'i güncelle - point değiştiğinde
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams)
+    
+    if (point) {
+      params.set('lat', point.lat.toFixed(6))
+      params.set('lng', point.lng.toFixed(6))
+    } else {
+      params.delete('lat')
+      params.delete('lng')
+    }
+    
+    setSearchParams(params, { replace: true })
+  }, [point])
+
+  // URL'i güncelle - date değiştiğinde
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams)
+    
+    if (date) {
+      params.set('date', date)
+    } else {
+      params.delete('date')
+    }
+    
+    setSearchParams(params, { replace: true })
+  }, [date])
 
   useEffect(() => {
     try {
@@ -926,6 +972,19 @@ export default function APP() {
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
   }, [editingAddress])
+
+  // URL'den gelen koordinatlara haritayı yönlendir (sadece ilk yüklemede)
+  useEffect(() => {
+    if (point && mapRef.current) {
+      const timer = setTimeout(() => {
+        mapRef.current?.setView([point.lat, point.lng], 10, { animate: true })
+        // Reverse geocode'u da çağır
+        reverseGeocode(point)
+      }, 500)
+      return () => clearTimeout(timer)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Sadece ilk mount'ta çalışır
 
   return (
     <div className="app-shell">
