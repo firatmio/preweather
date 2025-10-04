@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: center;
   animation: fadeIn .2s;
+  backdrop-filter: blur(2.5px);
 }
 .climate-modal {
   background: #23242a;
