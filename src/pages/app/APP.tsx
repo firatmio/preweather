@@ -38,7 +38,6 @@ interface GeoSuggestion {
 
 export default function APP() {
   const [climateOpen, setClimateOpen] = useState(false)
-  // Geçici bilgi bloğu için state
   const [infoBlob, setInfoBlob] = useState<{
     msg: string
     type?: 'warn' | 'error' | 'info'
@@ -49,7 +48,6 @@ export default function APP() {
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<any>(null)
   const [checking, setChecking] = useState(false)
-  // AI tavsiye çeviri durumları - parça bazlı çeviri için
   const [adviceParts, setAdviceParts] = useState<{labelKey: string | null; content: string}[]>([])
   const [adviceTranslating, setAdviceTranslating] = useState(false)
   const adviceTranslationCacheRef = useRef<Map<string, string>>(new Map())
@@ -58,7 +56,6 @@ export default function APP() {
   )
   const [activeMetric, setActiveMetric] = useState<string | null>(null)
   const [showCookieModal, setShowCookieModal] = useState(false)
-  // Address & search states
   const [address, setAddress] = useState<string>('')
   const [editingAddress, setEditingAddress] = useState(false)
   const [addrQuery, setAddrQuery] = useState('')
@@ -104,7 +101,6 @@ export default function APP() {
     }
   })
 
-  // Tercihi kalıcılaştır
   useEffect(() => {
     try {
       localStorage.setItem('pw.tempUnit', tempUnit)
@@ -116,7 +112,6 @@ export default function APP() {
     } catch {}
   }, [windUnit])
 
-  // İlk render flash engelle: body'ye preload class, hydrate sonrası kaldır
   useEffect(() => {
     document.body.classList.add('preload')
     const h = setTimeout(() => {
@@ -261,11 +256,9 @@ export default function APP() {
           setActiveMetric(null)
           setMetricsEnabled({})
           setError(null)
-          // Yeni seçimde eski hata / su tespiti durumlarını temizle
           setAddrInvalid(false)
           setWaterDetected(false)
           waterDetectedRef.current = false
-          // Reverse geocode real call
           reverseGeocode(newPoint)
         }
       },
@@ -298,7 +291,6 @@ export default function APP() {
 
   const handleFetchPrediction = async () => {
     if (!point || !date || checking) return
-    // Mevcut isteği iptal et
     if (predictionAbortRef.current) predictionAbortRef.current.abort()
     const controller = new AbortController()
     predictionAbortRef.current = controller
@@ -331,7 +323,6 @@ export default function APP() {
           signal: controller.signal,
         })
       } catch (fetchErr: any) {
-        // Ağ hatası (ERR_FAILED, bağlantı yok, CORS, vs.)
         setInfoBlob({
           msg: t('app.error.network') || 'Ağ bağlantı hatası',
           type: 'error',
@@ -351,7 +342,6 @@ export default function APP() {
         ) {
           throw new Error('NO_DATA_PARSE_ERROR')
         }
-        // Tüm hata/uyarılar için genel bilgi bloğu göster
         setInfoBlob({
           msg: t('app.error.general') || 'Bir hata oluştu',
           type: 'error',
@@ -450,10 +440,6 @@ export default function APP() {
       })
   }, [parsedAdvice])
 
-  // Önce split yap, sonra her parçayı çevir mantığı için - useEffect içinde yapılacak
-  // Bu useMemo artık kullanılmıyor, adviceParts state'i direkt kullanılacak
-
-  // Önce split yap, sonra her parçayı çevir (DeepL API kullanarak)
   useEffect(() => {
     const original = result?.agricultural_advice
     if (!original || typeof original !== 'string') {
@@ -464,10 +450,9 @@ export default function APP() {
     const isLikelyJSON = trimmed.startsWith('{') && trimmed.endsWith('}')
     if (isLikelyJSON) {
       setAdviceParts([])
-      return // JSON yapısını bozmamak için işleme
+      return
     }
 
-    // 1. Önce split yap - Türkçe başlıkları yakala
     const labelMap: Record<string, string> = {
       yorum: 'advice.yorum',
       öneri: 'advice.öneri',
@@ -490,20 +475,17 @@ export default function APP() {
     const tail = original.slice(lastIndex).trim()
     if (tail) parts.push({ labelKey: lastLabel, content: tail, original: tail })
 
-    // Dil Türkçe ise çeviri yapma, direkt kullan
     if (language === 'tr') {
       setAdviceParts(parts)
       setAdviceTranslating(false)
       return
     }
 
-    // 2. Her parçayı ayrı ayrı İngilizce'ye çevir - TÜM çeviriler bitene kadar bekle
     let cancelled = false
     const controllers: AbortController[] = []
     const targetLang = 'EN'
     const AUTH_KEY = import.meta.env.VITE_AUTH_KEY as string;
 
-    // Çeviri başladığında loading state'i aç, parçaları temizle
     setAdviceTranslating(true)
     setAdviceParts([])
 
@@ -537,14 +519,12 @@ export default function APP() {
             return { ...part, content: translated }
           }
         } catch {
-          // Çeviri başarısız, orijinali kullan
         }
         return part
       }),
     )
       .then((translatedParts) => {
         if (!cancelled) {
-          // TÜM çeviriler tamamlandı, şimdi göster
           setAdviceParts(translatedParts)
           setAdviceTranslating(false)
         }
@@ -562,11 +542,9 @@ export default function APP() {
     }
   }, [result?.agricultural_advice, language])
 
-  // --- Reverse Geocode (Mock) ---
   const reverseGeocode = async (pt: SelectedPoint) => {
     try {
       setAddrLoading(true)
-      // Başlangıçta önceki hata bayrağını temizle
       setAddrInvalid(false)
       setAddrServerError(false)
       setWaterDetected(false)
@@ -586,7 +564,6 @@ export default function APP() {
           break
         }
         if (res.status >= 500) {
-          // küçük gecikme ile retry
           await new Promise((r) => setTimeout(r, 400 + attempt * 200))
           continue
         }
@@ -599,7 +576,6 @@ export default function APP() {
         }
         throw new Error('bad response')
       }
-      // Build a concise label: Country, State/City, Suburb (fallback chain)
       const addr = data.address || {}
       const country = addr.country || addr.country_code?.toUpperCase() || ''
       const city = addr.city || addr.town || addr.state || addr.region || ''
@@ -619,7 +595,6 @@ export default function APP() {
         setWaterDetected(!!waterFlag)
         waterDetectedRef.current = !!waterFlag
       }
-      // Ek su tespiti: Overpass ile yakındaki water polygon kontrolü (cache'li)
       if (!waterFlag) {
         checkWaterViaOverpass(pt)
           .then((isWater) => {
@@ -651,7 +626,6 @@ export default function APP() {
     if (point) reverseGeocode(point)
   }, [point, language])
 
-  // Forward geocode suggestions
   useEffect(() => {
     if (!editingAddress) return
     const q = addrQuery.trim()
@@ -673,7 +647,7 @@ export default function APP() {
         })
         if (!res.ok) throw new Error('bad response')
         const data = await res.json()
-        if (lastSearchIdRef.current !== searchId) return // stale
+        if (lastSearchIdRef.current !== searchId) return
         const mapped: GeoSuggestion[] = data.map((d: any) => ({
           display: d.display_name,
           lat: parseFloat(d.lat),
@@ -703,7 +677,6 @@ export default function APP() {
     setAddrQuery(s.display)
     setEditingAddress(false)
     const newPoint = { lat: s.lat, lng: s.lon }
-    // Eğer mevcut point'den anlamlı şekilde farklıysa sonuçları sıfırla
     const changed =
       !point ||
       Math.abs(point.lat - newPoint.lat) > 0.00005 ||
@@ -718,7 +691,6 @@ export default function APP() {
     setAddrInvalid(false)
     setWaterDetected(false)
     waterDetectedRef.current = false
-    // Merkeze odakla
     if (mapRef.current) {
       const targetZoom = Math.max(mapRef.current.getZoom(), 12)
       mapRef.current.flyTo([s.lat, s.lon], targetZoom, { duration: 1.1 })
@@ -730,16 +702,14 @@ export default function APP() {
     setTimeout(() => setAddrErrorShake(false), 900)
   }
 
-  // Overpass water detection (simple cache + minimal query)
   const checkWaterViaOverpass = async (pt: SelectedPoint): Promise<boolean> => {
     const key = `${pt.lat.toFixed(4)},${pt.lng.toFixed(4)}`
     if (waterCacheRef.current.has(key))
       return waterCacheRef.current.get(key) || false
     try {
-      // Rate limiting & backoff
       const now = Date.now()
       const since = now - overpassLastCallRef.current
-      const baseGap = 1600 // ms
+      const baseGap = 1600
       if (since < baseGap) {
         await new Promise((r) => setTimeout(r, baseGap - since))
       }
@@ -762,10 +732,8 @@ export default function APP() {
       const data = await res.json()
       let isWater = false
       if (Array.isArray(data.elements)) {
-        // Basit alan (yaklaşık) threshold: çok küçük parçalara duyarsızlık (ör: < ~5000 m2)
         for (const el of data.elements) {
           if (!el.geometry || !Array.isArray(el.geometry)) continue
-          // Alanı hesaplamak için basit poligon yaklaşımı (shoelace) - coğrafi eğrilik ihmal
           const pts = el.geometry.map((g: any) => [g.lat, g.lon])
           if (pts.length < 3) continue
           let area = 0
@@ -775,10 +743,8 @@ export default function APP() {
             area += x1 * y2 - x2 * y1
           }
           area = Math.abs(area) / 2
-          // Derece bazında kaba -> metre kare: enlemi ~pt.lat alıp 1 derece ~111km varsayıyoruz
           const latScale = 111000
           const lonScale = Math.cos((pt.lat * Math.PI) / 180) * 111000
-          // area currently degree^2 * (latScale*lonScale)
           const approxM2 = area * latScale * lonScale
           if (approxM2 > 5000) {
             isWater = true
@@ -797,7 +763,6 @@ export default function APP() {
     }
   }
 
-  // Hata sonrasında otomatik zoom geri alma
   useEffect(() => {
     if (addrInvalid && previousViewRef.current && mapRef.current) {
       const view = previousViewRef.current
@@ -809,7 +774,6 @@ export default function APP() {
     }
   }, [addrInvalid])
 
-  // Arama highlight fonksiyonu
   const renderHighlighted = (text: string) => {
     const q = addrQuery.trim()
     if (!q) return text
@@ -846,7 +810,6 @@ export default function APP() {
     }
   }, [editingAddress])
 
-  // Klavye navigasyonu yönetimi
   const handleSuggestionNav = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!geoSuggestions.length) return
     if (e.key === 'ArrowDown') {
@@ -872,7 +835,6 @@ export default function APP() {
     if (!geoSuggestions.length) setSuggIndex(-1)
   }, [geoSuggestions])
 
-  // Aktif öneri klavye ile değiştiğinde görünür alanda tut
   useEffect(() => {
     if (suggIndex < 0) return
     const container = suggListRef.current
@@ -880,7 +842,6 @@ export default function APP() {
     const items = container.querySelectorAll<HTMLDivElement>('.addr-sugg')
     if (!items.length || !items[suggIndex]) return
     const el = items[suggIndex]
-    // scrollIntoView yerine manuel hesap -> daha yumuşak ve container dışına fazla kaymaz
     const cTop = container.scrollTop
     const cHeight = container.clientHeight
     const eOffsetTop = el.offsetTop
@@ -895,7 +856,6 @@ export default function APP() {
     }
   }, [suggIndex])
 
-  // İlk sonuç gelince pending auto-select varsa uygula
   useEffect(() => {
     if (pendingAutoSelectRef.current && !addrLoading && geoSuggestions.length) {
       pendingAutoSelectRef.current = false
@@ -906,17 +866,14 @@ export default function APP() {
       !addrLoading &&
       !geoSuggestions.length
     ) {
-      // Sonuç yoksa hata tetikleyip flag'i temizle (isteğe göre es geçilebilir)
       pendingAutoSelectRef.current = false
       triggerAddrError()
       setAddrInvalid(true)
     }
   }, [addrLoading, geoSuggestions])
 
-  // Global shortcut: Alt + S -> focus address search
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      // Some browsers report lowercase; safeguard both
       if (e.altKey && (e.key === 's' || e.key === 'S')) {
         e.preventDefault()
         openAddressEditor()
@@ -926,7 +883,6 @@ export default function APP() {
     return () => window.removeEventListener('keydown', handler)
   }, [])
 
-  // Açma / kapama yardımcıları
   const openAddressEditor = () => {
     if (editingAddress) return
     const active = document.activeElement
@@ -954,7 +910,6 @@ export default function APP() {
     }
   }
 
-  // Dış tıklama (map hariç) yakalama
   useEffect(() => {
     if (!editingAddress) return
     const handler = (e: MouseEvent) => {
@@ -965,8 +920,7 @@ export default function APP() {
       )
         return
       if (mapWrapperRef.current && mapWrapperRef.current.contains(target))
-        return // map tıklaması hariç (zaten başka logic var)
-      // addr-overlay (display modu) klikleri editor açma/kapama değil, burada editing true iken overlay arka plan sayılır.
+        return
       closeAddressEditor(true)
     }
     document.addEventListener('mousedown', handler)
@@ -1000,7 +954,6 @@ export default function APP() {
           </div>
         </div>
       )}
-      {/** Geçerli koordinat: reverse geocode sonrası addrInvalid=false ise accepted */}
       {(() => {
         const hasValidPoint = !!point && !addrInvalid
         return (
@@ -1216,7 +1169,6 @@ export default function APP() {
                               return Math.abs(raw).toFixed(2) + ' cm'
                             if (m === 'RH2M') return raw.toFixed(0) + '%'
                             if (m === 'ALLSKY_KT') {
-                              // ALLSKY_KT değeri 0-1 aralığında ise %'ye çevir, aksi halde direkt göster
                               return raw <= 1
                                 ? (raw * 100).toFixed(0) + '%'
                                 : raw.toFixed(0) + '%'
@@ -1466,13 +1418,10 @@ export default function APP() {
                     closeAddressEditor(true)
                   }
                   if (e.key === 'Enter') {
-                    // Sonuçlar daha gelmediyse Enter ile ilk gelen sonucu otomatik uygulamak için pending işaretle
                     if (addrLoading && !geoSuggestions.length) {
                       pendingAutoSelectRef.current = true
-                      // Kullanıcının yazdığı metni geçici adres olarak gösterelim
                       if (addrQuery.trim()) setAddress(addrQuery.trim())
                       if (addrInvalid) setAddrInvalid(false)
-                      // Editörden çık (isteğe göre açık da bırakılabilir)
                       closeAddressEditor(false)
                       return
                     }

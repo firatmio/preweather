@@ -5,13 +5,13 @@ import { useTranslation } from '../../contexts/TranslationContext';
 import './DatePicker.css';
 
 export interface PwDatePickerProps {
-  value: string; // ISO yyyy-mm-dd
+  value: string;
   min?: string;
   max?: string;
   onChange: (val: string) => void;
   disabled?: boolean;
-  locale?: string; // e.g. 'tr-TR'
-  weekStart?: 0 | 1; // 0=Sunday 1=Monday
+  locale?: string;
+  weekStart?: 0 | 1;
   inline?: boolean;
   todayLabel?: string;
   clearLabel?: string;
@@ -27,10 +27,9 @@ export const PwDatePicker: React.FC<PwDatePickerProps> = ({ value, min, max, onC
   const { t } = useTranslation();
   const [open,setOpen]=useState(false);
   const today = useMemo(()=>{ const now = new Date(); return isoFromYMD(now.getFullYear(), now.getMonth(), now.getDate()); },[]);
-  // Etkin min / max: props yoksa bugün ve +1 yıl
   const effectiveMin = useMemo(()=>{
     if (min) return min;
-    return today; // geçmiş seçilemesin
+    return today;
   },[min,today]);
   const effectiveMax = useMemo(()=>{
     if (max) return max;
@@ -66,10 +65,9 @@ export const PwDatePicker: React.FC<PwDatePickerProps> = ({ value, min, max, onC
   function nav(delta:number){
     let y=viewYear; let m=viewMonth+delta;
     if(m<0){m=11;y--;} if(m>11){m=0;y++;}
-    // Aylık aralık tamamen sınır dışıysa engelle
     const monthStart = isoFromYMD(y,m,1);
     const monthEnd = isoFromYMD(y,m, new Date(y,m+1,0).getDate());
-    if (monthEnd < effectiveMin || monthStart > effectiveMax) return; // out of bounds
+    if (monthEnd < effectiveMin || monthStart > effectiveMax) return;
     setViewYear(y); setViewMonth(m);
   }
 
@@ -78,7 +76,6 @@ export const PwDatePicker: React.FC<PwDatePickerProps> = ({ value, min, max, onC
 
   useEffect(()=>{ if(value){ const y=parseInt(value.slice(0,4),10); const m=parseInt(value.slice(5,7),10)-1; setViewYear(y); setViewMonth(m); } },[value]);
 
-  // Prev/Next butonlarının etkinliği
   const canPrev = useMemo(()=>{
     const m=viewMonth-1 <0?11: viewMonth-1; const py = viewMonth-1<0? viewYear-1: viewYear;
     const monthEnd = isoFromYMD(py,m,new Date(py,m+1,0).getDate());

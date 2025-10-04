@@ -1,5 +1,3 @@
-// ...existing code...
-// Translation context and hook
 import { createContext, useContext, useEffect, useState } from 'react'
 
 export type Language = 'en' | 'tr'
@@ -18,7 +16,6 @@ const translations = {
   tr: {
     'app.climateInfo': 'Geçmiş Hava Verileri',
     'app.climate.selectData': 'Gösterilecek Veriler',
-    // Header
     'nav.about': 'Hakkında',
     'nav.apis': "API'ler",
     'nav.docs': 'Dokümantasyon',
@@ -59,7 +56,6 @@ const translations = {
     'home.weather.rainy': 'Yağmurlu',
     'home.weather.stormy': 'Fırtınalı',
 
-    // About Page
     'about.title': 'Hakkımızda',
     'about.description':
       "PreWeather, NASA API'leri ve Prophet tahmin modeli ile gelecek tarihli hava durumu öngörüleri sunar.",
@@ -100,16 +96,13 @@ const translations = {
     'about.call.docs': 'Dokümantasyona Git',
     'about.call.try': 'Uygulamayı Deneyin',
 
-    // Docs Page
     'docs.title': 'Dokümantasyon',
     'docs.description':
       'API kullanımı ve özellikler hakkında detaylı bilgiler.',
 
-    // APIs Page
     'apis.title': "API'ler",
     'apis.description': "Kullanılabilir NASA API'lerinin listesi.",
 
-    // App Page
     'app.title': 'PreWeather Uygulaması',
     'app.description': 'Hava durumu verilerine erişin.',
     'app.select.title': 'Konum Seç',
@@ -158,7 +151,6 @@ const translations = {
     'advice.recommendations': 'Öneriler',
     'advice.actions': 'Aksiyonlar',
     'advice.notes': 'Notlar',
-    // Address overlay
     'addr.placeholder': 'Adres ara...',
     'addr.searching': 'Aranıyor...',
     'addr.noResults': 'Sonuç yok',
@@ -190,7 +182,6 @@ const translations = {
     'metricDesc.SNODP': 'Kar kalınlığı / kar örtüsü',
     'metricDesc.RH2M': 'Bağıl nem oranı',
     'metricDesc.ALLSKY_KT': 'Güneşlenme (All-sky) indeks yüzdesi',
-    // 404 Page
     '404.title': 'Sayfa bulunamadı',
     '404.desc':
       'Aradığınız sayfa taşınmış, silinmiş ya da hiç var olmamış olabilir.',
@@ -211,14 +202,12 @@ const translations = {
     'metric.T2M_MAX': 'Maks Sıcaklık (T2M_MAX)',
     'metric.T2M_MIN': 'Min Sıcaklık (T2M_MIN)',
     'metric.WS2M': 'Rüzgar Hızı (WS2M)',
-    // Required Cookie Modal
     'cookie.required.title': 'Zorunlu Çerez Onayı Gerekli',
     'cookie.required.message':
       'Devam edebilmek için temel işlevsellik sağlayan zorunlu çerezleri kabul etmeniz gerekiyor. Bu çerezler oturum ve dil tercihleri gibi çekirdek özellikler içindir ve pazarlama amacı taşımaz.',
     'cookie.required.accept': 'Zorunlu Çerezleri Kabul Et',
     'cookie.required.info': 'Detaylı politika yakında eklenecek.',
 
-    // Cookie Consent
     'cookie.title': 'Çerezleri Kullanıyoruz',
     'cookie.message':
       'Deneyiminizi geliştirmek için çerezleri kullanıyoruz. Siteyi kullanmaya devam ederek çerez kullanımını kabul etmiş olursunuz.',
@@ -229,13 +218,11 @@ const translations = {
   en: {
     'app.climateInfo': 'Past Weather Data',
     'app.climate.selectData': 'Display Data',
-    // Header
     'nav.about': 'About',
     'nav.apis': 'APIs',
     'nav.docs': 'Documentation',
     'nav.app': 'App',
 
-    // Home Page
     'home.badge': 'NASA API × Prophet ML',
     'home.title.main': 'Predict the Future',
     'home.title.gradient': 'Weather',
@@ -270,7 +257,6 @@ const translations = {
     'home.weather.rainy': 'Rainy',
     'home.weather.stormy': 'Stormy',
 
-    // About Page
     'about.title': 'About Us',
     'about.description':
       'PreWeather delivers future date weather forecasts using NASA data and the Prophet time series model.',
@@ -311,15 +297,12 @@ const translations = {
     'about.call.docs': 'Go to Docs',
     'about.call.try': 'Try the App',
 
-    // Docs Page
     'docs.title': 'Documentation',
     'docs.description': 'Detailed information about API usage and features.',
 
-    // APIs Page
     'apis.title': 'APIs',
     'apis.description': 'List of available NASA APIs.',
 
-    // App Page
     'app.title': 'PreWeather Application',
     'app.description': 'Access weather data.',
     'app.select.title': 'Select Location',
@@ -369,7 +352,6 @@ const translations = {
     'advice.recommendations': 'Recommendations',
     'advice.actions': 'Actions',
     'advice.notes': 'Notes',
-    // Address overlay
     'addr.placeholder': 'Search address...',
     'addr.searching': 'Searching...',
     'addr.noResults': 'No results',
@@ -401,7 +383,6 @@ const translations = {
     'metricDesc.SNODP': 'Snow depth / cover',
     'metricDesc.RH2M': 'Relative humidity percentage',
     'metricDesc.ALLSKY_KT': 'All-sky solar index percentage',
-    // 404 Page
     '404.title': 'Page Not Found',
     '404.desc':
       'The page you are looking for may have been moved, deleted, or never existed.',
@@ -421,14 +402,12 @@ const translations = {
     'metric.T2M_MAX': 'Max Temperature (T2M_MAX)',
     'metric.T2M_MIN': 'Min Temperature (T2M_MIN)',
     'metric.WS2M': 'Wind Speed (WS2M)',
-    // Required Cookie Modal
     'cookie.required.title': 'Required Cookie Consent',
     'cookie.required.message':
       'To continue, you must accept the essential cookies that enable core functionality (session, language preference). These do not include marketing or tracking cookies.',
     'cookie.required.accept': 'Accept Essential Cookies',
     'cookie.required.info': 'Detailed policy coming soon.',
 
-    // Cookie Consent
     'cookie.title': 'We Use Cookies',
     'cookie.message':
       'We use cookies to improve your experience. By continuing to use the site, you accept the use of cookies.',

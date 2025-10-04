@@ -12,7 +12,6 @@ interface ClimateModalProps {
 }
 
 
-// Her metrik için yıl-bazlı dizi çıkar, -999 değerli yılları filtrele
 function extractMetricSeries(data: any[], metrics: string[]): Record<string, {year: number, value: number}[]> {
   const out: Record<string, {year: number, value: number}[]> = {};
   metrics.forEach(m => { out[m] = []; });
@@ -22,7 +21,6 @@ function extractMetricSeries(data: any[], metrics: string[]): Record<string, {ye
       if (metricObj && typeof metricObj === 'object') {
         Object.entries(metricObj).forEach(([dateStr, v]: [string, any]) => {
           if (typeof v === 'number' && !isNaN(v) && v !== -999) {
-            // dateStr: YYYYMMDD, sadece yıl al
             const year = parseInt(dateStr.slice(0,4));
             out[m].push({ year, value: v });
           }
@@ -30,18 +28,15 @@ function extractMetricSeries(data: any[], metrics: string[]): Record<string, {ye
       }
     });
   });
-  // Yıllara göre sırala
   metrics.forEach(m => { out[m].sort((a,b)=>a.year-b.year); });
   return out;
 }
 
-// Canlı renk paleti - component dışında tanımla
 const palette = [
   '#FF6B6B','#4ECDC4','#45B7D1','#FFA07A','#98D8C8','#F7DC6F','#BB8FCE','#85C1E2','#F8B500','#52B788',
   '#E63946','#06FFA5','#118AB2','#FF9F1C','#2A9D8F','#E76F51','#8338EC','#FF006E','#06D6A0','#FFBE0B'
 ];
 
-// Hex rengi RGB'ye çevir
 function hexToRgb(hex: string): {r: number, g: number, b: number} {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
@@ -55,7 +50,6 @@ export const ClimateModal: React.FC<ClimateModalProps> = ({ open, onClose, data,
   const [selected, setSelected] = useState<string[]>(metrics);
   const [tooltip, setTooltip] = useState<{x:number,y:number,text:string}|null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  // Her metrik için sabit renk ataması (metrics array sırasına göre)
   const metricColorMap = useRef<Map<string,string>>(new Map());
   useEffect(() => {
     metrics.forEach((m,i)=> {
@@ -66,28 +60,22 @@ export const ClimateModal: React.FC<ClimateModalProps> = ({ open, onClose, data,
     if (!open || !canvasRef.current) return;
     const ctx = canvasRef.current.getContext('2d');
     if (!ctx) return;
-    // Boyutlar
     const W = 1100, H = 540, pad = 64;
     ctx.canvas.width = W;
     ctx.canvas.height = H;
     ctx.font = '18px sans-serif';
     ctx.fillStyle = '#222';
     ctx.fillRect(0,0,W,H);
-    // Verileri hazırla
     const series = extractMetricSeries(data, selected);
-    // Tüm yılları topla
     const allYears = Array.from(new Set(selected.flatMap(m => series[m].map(d=>d.year)))).sort((a,b)=>a-b);
-    // Y ekseni aralığı: seçili metrikler için ortak
     const globalMin = Math.min(...selected.flatMap(mm=>series[mm].map(d=>d.value)));
     const globalMax = Math.max(...selected.flatMap(mm=>series[mm].map(d=>d.value)));
-    // Eksenler
     ctx.strokeStyle = '#fff8';
     ctx.beginPath();
     ctx.moveTo(pad, pad);
     ctx.lineTo(pad, H-pad);
     ctx.lineTo(W-pad, H-pad);
     ctx.stroke();
-    // Yıl etiketleri (X ekseni) - 45 derece açıyla, marginTop ekle
     allYears.forEach((year,i) => {
       const x = pad + (W-2*pad) * (i/(allYears.length-1||1));
       ctx.save();
@@ -97,16 +85,12 @@ export const ClimateModal: React.FC<ClimateModalProps> = ({ open, onClose, data,
       ctx.fillText(String(year), 0, 0);
       ctx.restore();
     });
-    // Nokta bilgilerini tooltip için sakla
     const pointsData: {x:number,y:number,metric:string,year:number,value:number}[] = [];
-    // Her metrik için çizgi ve noktalar (eşit aralıklı X ekseni)
     selected.forEach((m) => {
       const baseColor = metricColorMap.current.get(m) || palette[0];
       const arr = series[m];
       if (!arr.length) return;
-      // Her yıl için eşit aralıklı X pozisyonu
       const spacing = (W - 2*pad) / (allYears.length > 1 ? allYears.length - 1 : 1);
-      // Çizgi
       ctx.beginPath();
       arr.forEach((d, i) => {
         const yearIndex = allYears.indexOf(d.year);
@@ -117,14 +101,11 @@ export const ClimateModal: React.FC<ClimateModalProps> = ({ open, onClose, data,
       ctx.strokeStyle = baseColor;
       ctx.lineWidth = 2.8;
       ctx.stroke();
-      // Noktalar - her noktaya renk tonlaması (gradient effect)
       arr.forEach((d) => {
         const yearIndex = allYears.indexOf(d.year);
         const x = pad + yearIndex * spacing;
         const y = H-pad - ((d.value-globalMin)/(globalMax-globalMin||1))*(H-2*pad);
-        // Tooltip verisi kaydet
         pointsData.push({x,y,metric:m,year:d.year,value:d.value});
-        // Değer bazlı renk tonlaması (düşük->koyu, yüksek->açık)
         const intensity = (d.value - globalMin) / (globalMax - globalMin || 1);
         const rgb = hexToRgb(baseColor);
         const toned = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${0.6 + intensity * 0.4})`;
@@ -137,7 +118,6 @@ export const ClimateModal: React.FC<ClimateModalProps> = ({ open, onClose, data,
         ctx.stroke();
       });
     });
-    // Y ekseni - 10 nokta (9 eşit aralık) - en küçükten en büyüğe
     ctx.fillStyle = '#fff8';
     ctx.font = '15px sans-serif';
     const numPoints = 10;
@@ -146,7 +126,6 @@ export const ClimateModal: React.FC<ClimateModalProps> = ({ open, onClose, data,
       const yPos = H - pad - ((value - globalMin) / (globalMax - globalMin || 1)) * (H - 2 * pad);
       ctx.fillText(value.toFixed(2), pad - 48, yPos + 4);
     }
-    // Mouse move handler - tooltip
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvasRef.current?.getBoundingClientRect();
       if (!rect) return;
@@ -154,7 +133,6 @@ export const ClimateModal: React.FC<ClimateModalProps> = ({ open, onClose, data,
       const scaleY = H / rect.height;
       const mouseX = (e.clientX - rect.left) * scaleX;
       const mouseY = (e.clientY - rect.top) * scaleY;
-      // En yakın nokta bul (10px threshold)
       type PointData = {x:number,y:number,metric:string,year:number,value:number};
       let nearest: PointData | null = null;
       let minDist = 12;

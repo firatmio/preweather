@@ -1,4 +1,3 @@
-/* İklim Bilgisi Modalı */
 .climate-modal-overlay {
   position: fixed;
   z-index: 99999;
@@ -68,7 +67,6 @@
 .climate-btn:hover {
   background: #1256a6;
 }
-/* Geçici bilgi bloğu (info-blob) */
 .info-blob {
   position: fixed;
   top: 2.5rem;
@@ -107,7 +105,6 @@
   90% { opacity: 1; transform: translateX(-50%) scale(1); }
   100% { opacity: 0; transform: translateX(-50%) scale(.97); }
 }
-/* Preload aşaması: metin ve arkaplan geçişlerinde FOUC azaltma */
 body.preload * {
   transition: none !important;
   animation-play-state: paused !important;
@@ -819,7 +816,6 @@ body.preload .addr-display:before {
   padding: 0 1px;
 }
 
-/* Themed date selector enhancements */
 .date-input-wrap.has-value {
   border-color: rgba(240, 85, 20, 0.5);
 }
@@ -1018,7 +1014,6 @@ body.preload .addr-display:before {
   color: transparent;
 }
 
-/* Unit toggle row (temperature unit segmented control) */
 .unit-toggle-row {
   display: flex;
   align-items: center;
@@ -1530,7 +1525,6 @@ body.preload .addr-display:before {
   align-items: center;
 }
 
-/* Error shake */
 @keyframes addrShake {
   0% {
     transform: translateX(0);
