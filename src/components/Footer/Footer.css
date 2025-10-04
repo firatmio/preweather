@@ -1,0 +1,26 @@
+.footer {
+  width: 100vw;
+  height: auto;
+  padding: 1rem 0;
+  font-size: 1.25rem;
+  margin-top: 4rem;
+  font-weight: 600;
+  color: var(--pw-bg);
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+}
+
+.footer.home {
+  background: linear-gradient(transparent, black);
+  color: white;
+  margin-top: 0rem;
+}
+
+.footer.home svg, .footer svg {
+  width: 18px;
+  height: 18px;
+}
