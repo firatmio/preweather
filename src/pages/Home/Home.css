@@ -83,6 +83,7 @@
   color: rgba(255, 255, 255);
   line-height: 1.8;
   max-width: 800px;
+  text-align: center;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
 }
 
@@ -288,7 +289,7 @@
   background: white;
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-  margin: 4rem 0;
+  margin: 2rem 2rem .5rem 2rem;
 }
 
 .stat-item {

@@ -62,23 +62,22 @@ export default function Home() {
             <p>{t('home.feature3.desc')}</p>
           </div>
         </div>
-      </section>
-
-      <section className="stats">
-        <div className="stat-item">
-          <div className="stat-number">1M+</div>
-          <div className="stat-label">{t('home.stats.datapoints')}</div>
-        </div>
-        <div className="stat-divider"></div>
-        <div className="stat-item">
-          <div className="stat-number">72%</div>
-          <div className="stat-label">{t('home.stats.accuracy')}</div>
-        </div>
-        <div className="stat-divider"></div>
-        <div className="stat-item">
-          <div className="stat-number">365 {t('home.stats.days')}</div>
-          <div className="stat-label">{t('home.stats.forecast')}</div>
-        </div>
+        <section className="stats">
+          <div className="stat-item">
+            <div className="stat-number">1M+</div>
+            <div className="stat-label">{t('home.stats.datapoints')}</div>
+          </div>
+          <div className="stat-divider"></div>
+          <div className="stat-item">
+            <div className="stat-number">72%</div>
+            <div className="stat-label">{t('home.stats.accuracy')}</div>
+          </div>
+          <div className="stat-divider"></div>
+          <div className="stat-item">
+            <div className="stat-number">365 {t('home.stats.days')}</div>
+            <div className="stat-label">{t('home.stats.forecast')}</div>
+          </div>
+        </section>
       </section>
 
       <section className="cta">

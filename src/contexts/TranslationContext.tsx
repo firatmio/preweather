@@ -29,7 +29,7 @@ const translations = {
     'home.title.main': 'Geleceğin Hava Durumunu',
     'home.title.gradient': 'Tahmin Et',
     'home.description':
-      "NASA'nın güçlü API'leri ve Prophet makine öğrenimi modeliyle gelecek tarihlerde hava durumu tahminleri yapın. Sadece geçmiş verileri görmekle kalmayın, geleceği öngörün.",
+      "NASA'nın POWER API sini ve Prophet makine öğrenimi modeliyle gelecek tarihlerde hava durumu tahminleri yapın. Sadece geçmiş verileri görmekle kalmayın, geleceği öngörün.",
     'home.cta.start': 'Tahmine Başla',
     'home.cta.how': 'Nasıl Çalışır?',
 
