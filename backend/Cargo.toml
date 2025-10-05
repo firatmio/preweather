@@ -1,0 +1,13 @@
+[package]
+name = "hackathon"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+actix-web = "4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+reqwest = { version = "0.12", features = ["json"] }
+tokio = { version = "1", features = ["full"] }
+futures = "0.3" # Paralel istekler için eklendi
+rand = "0.8"
