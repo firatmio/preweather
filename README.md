@@ -363,15 +363,6 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 
 ---
 
-## 📞 İletişim & Destek
-
-- 🐛 **Bug Report**: [Issues](https://github.com/firatmio/preweather/issues)
-- 💡 **Feature Request**: [Discussions](https://github.com/firatmio/preweather/discussions)
-- 📧 **Email**: your-email@example.com
-- 🌐 **Website**: [preweather.vercel.app](https://preweather-nasa.vercel.app)
-
----
-
 <div align="center">
 
 **⭐ Beğendiyseniz yıldız vermeyi unutmayın! ⭐**
