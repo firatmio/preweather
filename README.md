@@ -351,6 +351,10 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 - GitHub: [@firatmio](https://github.com/firatmio)
 - Email: firattunaarslan@gmail.com
 
+**Arda Balcı**
+- GitHub: [@EdenBulurHakan59](https://github.com/EdenBulurHakan59)
+- Email: arda_balci24@trabzon.edu.tr
+
 ---
 
 ## 🙏 Teşekkürler
