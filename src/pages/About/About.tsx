@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { FaBrain, FaCloudSunRain, FaCodeBranch, FaSatellite } from 'react-icons/fa'
 import { TiWeatherCloudy } from 'react-icons/ti'
 import { useTranslation } from '../../contexts/TranslationContext'
@@ -5,6 +6,9 @@ import './About.css'
 
 export default function About() {
   const { t } = useTranslation()
+  useEffect(() => {
+    document.title = `PreWeather - ${t('nav.about')}`
+  }, [])
 
   return (
   <div className="about-page about-light">

@@ -18,6 +18,10 @@ export default function Docs() {
   const exportRef = useRef<HTMLElement>(null);
   const tipsRef = useRef<HTMLElement>(null);
 
+  useEffect(() => {
+    document.title = `PreWeather - ${t('nav.docs')}`
+  }, [])
+
   const sections = useMemo(() => [
     { id: 'intro', label: t('docs.nav.intro'), ref: introRef },
     { id: 'started', label: t('docs.nav.started'), ref: startedRef },

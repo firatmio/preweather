@@ -45,6 +45,9 @@ export default function APP() {
     type?: 'warn' | 'error' | 'info'
   } | null>(null)
   const { t, language } = useTranslation()
+  useEffect(() => {
+    document.title = `PreWeather - ${t('nav.app')}`
+  }, [])
   
   const [point, setPoint] = useState<SelectedPoint | null>(() => {
     const lat = searchParams.get('lat')
@@ -184,6 +187,18 @@ export default function APP() {
       }
     }
   }, [point])
+
+  useEffect(() => {
+    if (address && address.trim()) {
+      document.title = `PreWeather - ${address}`
+    } else {
+      document.title = `PreWeather - ${t("nav.app")}`
+    }
+
+    return () => {
+      document.title = `PreWeather - ${t("nav.app")}`
+    }
+  }, [address])
 
   const handleDownloadJSON = () => {
     if (!result) return
@@ -995,6 +1010,12 @@ export default function APP() {
         reverseGeocode(point)
       }, 500)
       return () => clearTimeout(timer)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (address) {
+      document.title = `PreWeather - ${address}`
     }
   }, [])
 

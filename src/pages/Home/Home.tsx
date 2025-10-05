@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { FaArrowRight, FaBrain, FaChartLine, FaRocket } from 'react-icons/fa'
 import { TiWeatherCloudy } from 'react-icons/ti'
 import { Link } from 'react-router-dom'
@@ -5,11 +6,14 @@ import { useTranslation } from '../../contexts/TranslationContext'
 import './Home.css'
 
 export default function Home() {
-  const { t } = useTranslation();
-  
+  const { t } = useTranslation()
+  useEffect(() => {
+    document.title = `PreWeather`
+  }, [])
+
   return (
     <div className="home-page">
-      <div className="background" ></div>
+      <div className="background"></div>
       <section className="hero">
         <div className="hero-content">
           <div className="hero-badge">
@@ -20,15 +24,21 @@ export default function Home() {
             {t('home.title.main')}
             <span className="gradient-text"> {t('home.title.gradient')}</span>
           </h1>
-          <p className="hero-description">
-            {t('home.description')}
-          </p>
+          <p className="hero-description">{t('home.description')}</p>
           <div className="hero-actions">
-            <Link to="/app" className="btn btn-primary">
+            <Link
+              to="/app"
+              className="btn btn-primary"
+            >
               {t('home.cta.start')}
-              <span className="btn-icon"><FaArrowRight /></span>
+              <span className="btn-icon">
+                <FaArrowRight />
+              </span>
             </Link>
-            <Link to="/docs" className="btn btn-secondary">
+            <Link
+              to="/docs"
+              className="btn btn-secondary"
+            >
               {t('home.cta.how')}
             </Link>
           </div>
@@ -45,7 +55,7 @@ export default function Home() {
             <h3>{t('home.feature1.title')}</h3>
             <p>{t('home.feature1.desc')}</p>
           </div>
-          
+
           <div className="feature-card">
             <div className="feature-icon">
               <FaBrain />
@@ -53,7 +63,7 @@ export default function Home() {
             <h3>{t('home.feature2.title')}</h3>
             <p>{t('home.feature2.desc')}</p>
           </div>
-          
+
           <div className="feature-card">
             <div className="feature-icon">
               <FaChartLine />
@@ -83,7 +93,10 @@ export default function Home() {
       <section className="cta">
         <h2>{t('home.cta.title')}</h2>
         <p>{t('home.cta.description')}</p>
-        <Link to="/app" className="btn btn-cta">
+        <Link
+          to="/app"
+          className="btn btn-cta"
+        >
           {t('home.cta.button')}
         </Link>
       </section>
