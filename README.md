@@ -19,7 +19,7 @@ PreWeather, NASA'nın POWER API'sini ve Facebook'un Prophet makine öğrenimi mo
 - 📅 **Tarih Seçimi**: 365 gün ileriye kadar tahmin yapma imkanı
 - 🌡️ **8 Farklı Metrik**: Sıcaklık, yağış, nem, rüzgar, bulutluluk ve daha fazlası
 - 🤖 **AI Önerileri**: DeepL API ile çok dilli tarımsal öneriler
-- 📊 **İklim Verileri**: 1981-2010 yılları arası geçmiş veriler ve görselleştirme
+- 📊 **İklim Verileri**: Geçmiş 25 yıldaki veriler ve görselleştirme
 
 ### 🛠️ Teknik Özellikler
 - ⚡ **React 19** & **TypeScript** ile modern mimari
