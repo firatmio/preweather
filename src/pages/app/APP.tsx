@@ -1194,29 +1194,17 @@ export default function APP() {
                             km/h
                           </button>
                         </div>
-                        <div
-                          className="ut-switch"
-                          role="switch"
-                          aria-label="Display Mode"
+                        <button
+                          type="button"
+                          className={`reliability-toggle ${showReliability ? 'active' : ''}`}
+                          aria-pressed={showReliability}
+                          onClick={() => setShowReliability(!showReliability)}
                           style={{ marginLeft: '.4rem' }}
                         >
-                          <button
-                            type="button"
-                            className={!showReliability ? 'on' : ''}
-                            aria-pressed={!showReliability}
-                            onClick={() => setShowReliability(false)}
-                          >
-                            {t('app.results.showValues')}
-                          </button>
-                          <button
-                            type="button"
-                            className={showReliability ? 'on' : ''}
-                            aria-pressed={showReliability}
-                            onClick={() => setShowReliability(true)}
-                          >
-                            {t('app.results.showReliability')}
-                          </button>
-                        </div>
+                          {showReliability
+                            ? t('app.results.showReliability')
+                            : t('app.results.showValues')}
+                        </button>
                       </div>
                       <div className="readable-summary">
                         <div className="readable-head">
