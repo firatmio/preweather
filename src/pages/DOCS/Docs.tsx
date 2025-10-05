@@ -176,10 +176,6 @@ export default function Docs() {
               <div className="docs-metric-card"><strong>PRECTOTCORR</strong><p>{t('docs.metrics.prec')}</p></div>
               <div className="docs-metric-card"><strong>RH2M</strong><p>{t('docs.metrics.rh')}</p></div>
               <div className="docs-metric-card"><strong>WS2M</strong><p>{t('docs.metrics.ws')}</p></div>
-              <div className="docs-metric-card"><strong>QV2M</strong><p>{t('docs.metrics.qv')}</p></div>
-              <div className="docs-metric-card"><strong>T2MDEW</strong><p>{t('docs.metrics.dew')}</p></div>
-              <div className="docs-metric-card"><strong>CLOUD_AMT</strong><p>{t('docs.metrics.cloud')}</p></div>
-              <div className="docs-metric-card"><strong>ALLSKY_SFC_SW_DWN</strong><p>{t('docs.metrics.solar')}</p></div>
             </div>
           </section>
 
