@@ -11,10 +11,11 @@ import {
   FaWater,
   FaWind,
 } from 'react-icons/fa6';
+import { GiFleshyMass } from 'react-icons/gi';
 import { MdSunny } from 'react-icons/md';
 import { PiSparkleFill, PiSunHorizonBold } from 'react-icons/pi';
 import { TiArrowLeftThick } from 'react-icons/ti';
-import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 import { Link, useSearchParams } from 'react-router';
 import { ClimateModal } from '../../components/ClimateModal';
 import PwDatePicker from '../../components/DatePicker/DatePicker';
@@ -169,6 +170,27 @@ export default function APP() {
     }
   }, [])
 
+  // Haritayı seçilen noktaya ortala (URL'den yükleme dahil)
+  useEffect(() => {
+    if (point && mapRef.current) {
+      // İlk yüklemede veya programatik değişikliklerde haritayı ortala
+      const currentCenter = mapRef.current.getCenter()
+      const distance = Math.sqrt(
+        Math.pow(currentCenter.lat - point.lat, 2) + 
+        Math.pow(currentCenter.lng - point.lng, 2)
+      )
+      
+      // Eğer nokta haritanın merkezinden uzaksa ortala
+      if (distance > 0.01) {
+        const targetZoom = Math.max(mapRef.current.getZoom(), 10)
+        mapRef.current.flyTo([point.lat, point.lng], targetZoom, { 
+          duration: 1,
+          easeLinearity: 0.25
+        })
+      }
+    }
+  }, [point])
+
   const handleDownloadJSON = () => {
     if (!result) return
     const exportObj = {
@@ -297,6 +319,7 @@ export default function APP() {
           }
         }
         setPoint(newPoint)
+        
         if (changed) {
           setResult(null)
           setActiveMetric(null)
@@ -309,25 +332,6 @@ export default function APP() {
         }
       },
     })
-    return null
-  }
-
-  // Auto-center map when URL has coordinates
-  function MapAutoCenter({ point }: { point: SelectedPoint | null }) {
-    const map = useMap()
-    const hasAutoCentered = useRef(false)
-
-    useEffect(() => {
-      // Only auto-center once on initial load if URL has coordinates
-      if (point && !hasAutoCentered.current) {
-        map.setView([point.lat, point.lng], 8, {
-          animate: true,
-          duration: 1
-        })
-        hasAutoCentered.current = true
-      }
-    }, [point, map])
-
     return null
   }
 
@@ -1215,6 +1219,8 @@ export default function APP() {
                                 return <FaWater />
                               case 'ALLSKY_KT':
                                 return <PiSunHorizonBold />
+                              case 'AOD_55_ADJ':
+                                return <GiFleshyMass />
                               case 'HDD18_3':
                                 return <MdSunny />
                               case 'CDD18_3':
@@ -1613,7 +1619,7 @@ export default function APP() {
         <MapContainer
           center={[39.0, 33.0]}
           zoom={6.45}
-          minZoom={3}
+          minZoom={4}
           maxZoom={18}
           zoomControl={true}
           className="leaflet-host apple-dark"
@@ -1626,7 +1632,6 @@ export default function APP() {
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           />
           <ClickCapture />
-          <MapAutoCenter point={point} />
           {point && (
             <Marker
               position={[point.lat, point.lng]}

@@ -239,6 +239,7 @@ body.preload .addr-display:before {
   z-index: 5;
   overflow: visible;
   overflow-x: scroll;
+  padding-bottom: 0;
 }
 
 .app-sidebar.empty {
