@@ -6,7 +6,6 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
 
-// 1. Gelen POST isteğinin gövdesini (body) temsil eden struct.
 #[derive(Deserialize, Debug)]
 struct CalculationRequest {
     day: u32,
@@ -16,7 +15,6 @@ struct CalculationRequest {
     longitude: f64,
 }
 
-// 2. NASA POWER API'sinden gelen cevabın yapısını temsil eden struct'lar.
 #[derive(Deserialize, Debug)]
 struct NasaPowerResponse {
     properties: NasaProperties,
@@ -27,14 +25,12 @@ struct NasaProperties {
     parameter: Value,
 }
 
-// 3. hackathon.hegsam.casa/prophet adresine göndereceğimiz nihai JSON yapısı.
 #[derive(Serialize, Debug)]
 struct FinalPayload {
     predict_date: String,
     data: Vec<Value>,
 }
 
-// 4. hackathon.hegsam.casa/prophet adresinden gelen cevabı modelleyen struct.
 #[derive(Deserialize, Serialize, Debug, Clone)]
 #[allow(non_snake_case)]
 struct ProphetResponse {
@@ -54,7 +50,6 @@ struct ProphetResponse {
     percentage: f64,
 }
 
-// 5. anyllm API isteği ve cevabı için Struct'lar
 #[derive(Serialize)]
 struct AnyLlmRequest<'a> {
     message: &'a str,
@@ -64,7 +59,6 @@ struct AnyLlmRequest<'a> {
     reset: bool,
 }
 
-// GÜNCELLENDİ: LLM cevabındaki "sources" dizisini yeni formata göre modelleyen struct.
 #[derive(Deserialize, Debug)]
 #[allow(non_snake_case)]
 struct Source {
@@ -107,14 +101,12 @@ struct LlmResponseObject {
     metrics: Metrics,
 }
 
-// LLM'den gelen textResponse içindeki JSON'ı modelleyen struct
 #[derive(Deserialize, Debug)]
 struct AdviceJson {
     yorum: String,
     öneri: String,
 }
 
-// Prophet verisi, LLM tavsiyesi ve NASA verilerini birleştiren nihai cevap struct'ı.
 #[derive(Serialize, Debug)]
 struct FinalApiResponse {
     prediction_data: ProphetResponse,
@@ -122,7 +114,6 @@ struct FinalApiResponse {
     historical_nasa_data: Vec<Value>,
 }
 
-// 6. /calculate endpoint'ini handle edecek ana fonksiyon.
 async fn calculate(req: web::Json<CalculationRequest>) -> impl Responder {
     println!("İstek alındı: {:?}", req);
 
@@ -334,7 +325,6 @@ async fn calculate(req: web::Json<CalculationRequest>) -> impl Responder {
                                                 "\n[LLM BİLGİ] LLM'den gelen ham cevap:\n{}\n",
                                                 text
                                             );
-                                            // DÜZELTME: Cevap artık dizi değil, tek bir nesne olarak bekleniyor.
                                             match serde_json::from_str::<LlmResponseObject>(&text) {
                                                 Ok(llm_data) => {
                                                     if let Some(err_msg) = &llm_data.error {
