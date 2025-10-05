@@ -1,13 +1,38 @@
 {
-  "name": "nasa-site",
+  "name": "preweather",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "NASA POWER API × Prophet ML ile gelecek hava durumu tahminleri",
+  "author": "Fırat Tuna Arslan <firattunaarslan@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/firatmio/preweather.git"
+  },
+  "bugs": {
+    "url": "https://github.com/firatmio/preweather/issues"
+  },
+  "homepage": "https://preweather-nasa.vercel.app",
+  "keywords": [
+    "weather",
+    "prediction",
+    "nasa",
+    "prophet",
+    "machine-learning",
+    "forecast",
+    "react",
+    "typescript"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "lint:fix": "eslint . --fix",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\""
   },
   "dependencies": {
     "@types/leaflet": "^1.9.20",
