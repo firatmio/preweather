@@ -336,7 +336,7 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 
 **Fırat Tuna Arslan**
 - GitHub: [@firatmio](https://github.com/firatmio)
-- Email: your-email@example.com
+- Email: firattunaarslan@gmail.com
 
 ---
 
