@@ -176,11 +176,15 @@ PreWeather aşağıdaki meteoroloji metriklerini tahmin eder:
 
 ## 🎨 Özellik Detayları
 
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/7f8183c0-2b06-4691-801c-8d8fa8a117d2" />
+
 ### 1. İnteraktif Harita
 - Dünya çapında herhangi bir noktaya tıklayın
 - Otomatik reverse geocoding ile adres tespiti
 - Su alanı kontrolü
 - Zoom ve pan özellikleri
+
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/72eebd76-875f-498e-8325-3f9f7e319ddb" />
 
 ### 2. Tarih Seçimi
 - Modern takvim picker
@@ -188,17 +192,27 @@ PreWeather aşağıdaki meteoroloji metriklerini tahmin eder:
 - Maksimum 365 gün ileri
 - Format: DD.MM.YYYY
 
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/5aef65fd-9a27-4780-8ac7-ed3ab6b26c1a" />
+
 ### 3. Tahmin Sonuçları
 - 8 farklı metrik için tahmin değerleri
 - Görsel hava durumu ikonları
 - Güvenilirlik skorları
 - AI destekli tarımsal öneriler
 
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/e1cdd403-da10-47a2-a1bd-ceab54531a9a" />
+
 ### 4. İklim Verileri
 - 1981-2010 yılları arası geçmiş veriler
 - İnteraktif çizgi grafikler
 - Metrik seçimi
 - PNG & PDF export
+
+Türkçe
+<img width="1918" height="1079" alt="image" src="https://github.com/user-attachments/assets/5584c471-46e1-4919-8120-a29641a2c3f1" />
+
+İngilizce
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/f509e37d-d056-40f6-b3b4-dfbd165f8cc8" />
 
 ### 5. Çok Dilli Destek
 - Türkçe & İngilizce
