@@ -334,7 +334,7 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 
 ## 👨‍💻 Geliştirici
 
-**Fırat Meriç**
+**Fırat Tuna Arslan**
 - GitHub: [@firatmio](https://github.com/firatmio)
 - Email: your-email@example.com
 
@@ -363,6 +363,6 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 
 **⭐ Beğendiyseniz yıldız vermeyi unutmayın! ⭐**
 
-Made with ❤️ and ☕ by [Fırat Meriç](https://github.com/firatmio)
+Made with ❤️ and ☕ by [Fırat Tuna Arslan](https://github.com/firatmio)
 
 </div>
