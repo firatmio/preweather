@@ -28,7 +28,6 @@ PreWeather, NASA'nın POWER API'sini ve Facebook'un Prophet makine öğrenimi mo
 - 🔗 **URL State Management**: Paylaşılabilir linkler
 - 💾 **Local Storage**: Tercih hatırlama
 - 📤 **Veri Dışa Aktarma**: JSON, CSV, PNG, PDF formatları
-- 🎭 **3D Animasyonlar**: Three.js ile görsel efektler
 
 ---
 
