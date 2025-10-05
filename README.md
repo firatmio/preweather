@@ -19,16 +19,14 @@ PreWeather, NASA'nın POWER API'sini ve Facebook'un Prophet makine öğrenimi mo
 - 📅 **Tarih Seçimi**: 365 gün ileriye kadar tahmin yapma imkanı
 - 🌡️ **8 Farklı Metrik**: Sıcaklık, yağış, nem, rüzgar, bulutluluk ve daha fazlası
 - 🤖 **AI Önerileri**: DeepL API ile çok dilli tarımsal öneriler
-- 📊 **İklim Verileri**: 1981-2010 yılları arası geçmiş veriler ve görselleştirme
+- 📊 **İklim Verileri**: Geçmiş 25 yıldaki veriler ve görselleştirme
 
 ### 🛠️ Teknik Özellikler
 - ⚡ **React 19** & **TypeScript** ile modern mimari
-- 🎨 **Responsive Design**: Mobil, tablet ve masaüstü uyumlu
 - 🌐 **Çok Dilli**: Türkçe & İngilizce desteği
 - 🔗 **URL State Management**: Paylaşılabilir linkler
 - 💾 **Local Storage**: Tercih hatırlama
 - 📤 **Veri Dışa Aktarma**: JSON, CSV, PNG, PDF formatları
-- 🎭 **3D Animasyonlar**: Three.js ile görsel efektler
 
 ---
 
@@ -154,23 +152,6 @@ preweather/
 ### Deployment
 - **Vercel** - Hosting & serverless functions
 - **Vercel Edge Network** - Global CDN
-
----
-
-## 📊 Metrikler
-
-PreWeather aşağıdaki meteoroloji metriklerini tahmin eder:
-
-| Metrik | Açıklama | Birim |
-|--------|----------|-------|
-| **T2M** | 2m yükseklikteki hava sıcaklığı | °C / °F |
-| **PRECTOTCORR** | Toplam yağış miktarı | mm/gün |
-| **RH2M** | Bağıl nem | % |
-| **WS2M** | Rüzgar hızı | m/s / km/h |
-| **QV2M** | Özgül nem | g/kg |
-| **T2MDEW** | Çiğ noktası sıcaklığı | °C |
-| **CLOUD_AMT** | Bulut miktarı | % |
-| **ALLSKY_SFC_SW_DWN** | Güneş radyasyonu | kWh/m²/gün |
 
 ---
 
@@ -310,36 +291,6 @@ Katkılarınızı bekliyoruz!
 
 ---
 
-## 🐛 Bilinen Sorunlar
-
-- [ ] Safari'de bazı CSS animasyonları optimize edilmeli
-- [ ] Mobilde harita performansı iyileştirilebilir
-- [ ] PDF export için daha fazla format seçeneği eklenebilir
-
----
-
-## 📈 Yol Haritası
-
-### v1.1 (Q1 2025)
-- [ ] Batch prediction (çoklu nokta)
-- [ ] Grafik karşılaştırma
-- [ ] Email export
-- [ ] Dark mode
-
-### v1.2 (Q2 2025)
-- [ ] Kullanıcı hesapları
-- [ ] Tahmin geçmişi
-- [ ] Favori lokasyonlar
-- [ ] API rate limiting
-
-### v2.0 (Q3 2025)
-- [ ] Mobil app (React Native)
-- [ ] Push notification
-- [ ] Offline mode
-- [ ] Advanced analytics
-
----
-
 ## 📄 Lisans
 
 Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
@@ -352,6 +303,10 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 - GitHub: [@firatmio](https://github.com/firatmio)
 - Email: firattunaarslan@gmail.com
 
+**Arda Balcı**
+- GitHub: [@EdenBulurHakan59](https://github.com/EdenBulurHakan59)
+- Email: arda_balci24@trabzon.edu.tr
+
 ---
 
 ## 🙏 Teşekkürler
@@ -361,15 +316,6 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 - [OpenStreetMap](https://www.openstreetmap.org/) - Harita verileri
 - [DeepL](https://www.deepl.com/) - Çeviri servisi
 - [Vercel](https://vercel.com/) - Hosting
-
----
-
-## 📞 İletişim & Destek
-
-- 🐛 **Bug Report**: [Issues](https://github.com/firatmio/preweather/issues)
-- 💡 **Feature Request**: [Discussions](https://github.com/firatmio/preweather/discussions)
-- 📧 **Email**: your-email@example.com
-- 🌐 **Website**: [preweather.vercel.app](https://preweather-nasa.vercel.app)
 
 ---
 
