@@ -636,12 +636,27 @@
 
 @media (max-width: 768px) {
   .features {
-    padding: 4rem 0;
+    padding: 4rem 0 2.5rem 0rem;
+    margin-bottom: 0;
+    border-radius: 0;
   }
   .stats {
-    margin: 3rem 0;
+    margin: 3rem 2rem 0rem 2rem;
   }
   .cta {
     padding: 4rem 1.5rem;
+    margin: 0;
+    border-radius: 0;
+  }
+  .docs-nav-sticky {display: none;}
+  .main-content {
+    padding: 0;
+  }
+  .docs-main {
+    padding: 0;
+    padding-top: 1rem;
+  }
+  .docs-content {
+    border-radius: 0;
   }
 }

@@ -121,6 +121,14 @@ export default function APP() {
       return 'MS'
     }
   })
+  const [showReliability, setShowReliability] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem('pw.showReliability')
+      return saved === 'true'
+    } catch {
+      return false
+    }
+  })
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams)
@@ -158,6 +166,11 @@ export default function APP() {
       localStorage.setItem('pw.windUnit', windUnit)
     } catch {}
   }, [windUnit])
+  useEffect(() => {
+    try {
+      localStorage.setItem('pw.showReliability', String(showReliability))
+    } catch {}
+  }, [showReliability])
 
   useEffect(() => {
     document.body.classList.add('preload')
@@ -1136,12 +1149,6 @@ export default function APP() {
                     <div className="results">
                       <h3>{t('app.results.title')}</h3>
                       <div className="unit-toggle-row">
-                        <span
-                          className="ut-label"
-                          title={t('unit.toggleLabel')}
-                        >
-                          {t('unit.toggleLabel')}:
-                        </span>
                         <div
                           className="ut-switch"
                           role="radiogroup"
@@ -1185,6 +1192,29 @@ export default function APP() {
                             onClick={() => setWindUnit('KMH')}
                           >
                             km/h
+                          </button>
+                        </div>
+                        <div
+                          className="ut-switch"
+                          role="switch"
+                          aria-label="Display Mode"
+                          style={{ marginLeft: '.4rem' }}
+                        >
+                          <button
+                            type="button"
+                            className={!showReliability ? 'on' : ''}
+                            aria-pressed={!showReliability}
+                            onClick={() => setShowReliability(false)}
+                          >
+                            {t('app.results.showValues')}
+                          </button>
+                          <button
+                            type="button"
+                            className={showReliability ? 'on' : ''}
+                            aria-pressed={showReliability}
+                            onClick={() => setShowReliability(true)}
+                          >
+                            {t('app.results.showReliability')}
                           </button>
                         </div>
                       </div>
@@ -1324,7 +1354,11 @@ export default function APP() {
                                       .replace(/\s*\(.*?\)\s*/g, '')
                                       .trim()}
                                   </span>
-                                  <strong className="val">{it.value}</strong>
+                                  <strong className="val">
+                                    {showReliability && it.rel !== undefined
+                                      ? it.rel.toFixed(0) + '%'
+                                      : it.value}
+                                  </strong>
                                 </li>
                               ))}
                             </ul>
