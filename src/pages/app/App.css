@@ -1007,7 +1007,7 @@ body.preload .addr-display:before {
 .unit-toggle-row {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: .2rem;
   margin: 0.55rem 0 0.4rem;
   font-size: 0.6rem;
   letter-spacing: 0.4px;
@@ -1078,6 +1078,8 @@ body.preload .addr-display:before {
   line-height: 1;
   box-shadow: 0 2px 8px -3px rgba(0, 0, 0, 0.5),
     inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  height: 27.75px;
+  flex: 1;
 }
 .reliability-toggle:hover {
   color: #fff;
