@@ -164,7 +164,7 @@ const translations = {
     'docs.results.weather.p2': 'Simgeler: ☀️ Güneşli, ☁️ Bulutlu, 🌧️ Yağmurlu, ❄️ Karlı',
     'docs.results.weather.p3': 'Tahmin edilen sıcaklık değeri büyük punto ile gösterilir.',
 
-    'docs.metrics.title': 'Metrik Değerleri',
+    'docs.metrics.title': 'Bazı Metrik Değerleri',
     'docs.metrics.intro': 'PreWeather 8 farklı meteoroloji metriği tahmin eder:',
     'docs.metrics.toggle': 'Metrikleri Açma/Kapama',
     'docs.metrics.toggle.p1': 'Her metriğin yanında bir göz simgesi bulunur.',
@@ -483,7 +483,7 @@ const translations = {
     'docs.results.weather.p2': 'Icons: ☀️ Sunny, ☁️ Cloudy, 🌧️ Rainy, ❄️ Snowy',
     'docs.results.weather.p3': 'The predicted temperature value is shown in large font.',
 
-    'docs.metrics.title': 'Metric Values',
+    'docs.metrics.title': 'Some Metric Values',
     'docs.metrics.intro': 'PreWeather predicts 8 different meteorological metrics:',
     'docs.metrics.toggle': 'Toggle Metrics',
     'docs.metrics.toggle.p1': 'There is an eye icon next to each metric.',
