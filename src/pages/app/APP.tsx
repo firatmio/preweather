@@ -1292,7 +1292,7 @@ export default function APP() {
                             if (['FROST_DAYS'].includes(m))
                               return Math.abs(raw).toFixed(0)
                             if (['PRECSNOLAND'].includes(m))
-                              return raw.toFixed(2) + ' mm'
+                              return Math.abs(raw).toFixed(2) + ' mm'
                             return raw.toString()
                           }
                           metricsList.forEach((m) => {
