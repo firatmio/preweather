@@ -1,0 +1,26 @@
+/* TEAM */
+Developer: Fırat Tuna Arslan
+Site: https://github.com/firatmio
+Location: Turkey
+
+/* THANKS */
+NASA POWER Project: https://power.larc.nasa.gov/
+Facebook Prophet: https://facebook.github.io/prophet/
+OpenStreetMap: https://www.openstreetmap.org/
+DeepL: https://www.deepl.com/
+Vercel: https://vercel.com/
+
+/* SITE */
+Last update: 2025/10/05
+Language: English / Turkish
+Standards: HTML5, CSS3, JavaScript ES6+
+Components: React, TypeScript, Vite
+IDE: Visual Studio Code
+
+/* TECHNOLOGIES */
+Frontend: React 19, TypeScript 5.9, Vite 7.1
+Mapping: Leaflet, React Leaflet
+3D Graphics: Three.js
+APIs: NASA POWER, DeepL, OpenStreetMap Nominatim
+ML Model: Prophet (Facebook)
+Hosting: Vercel

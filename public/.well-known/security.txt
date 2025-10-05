@@ -1,0 +1,20 @@
+# Security Policy for PreWeather
+# https://securitytxt.org/
+
+Contact: mailto:your-email@example.com
+Contact: https://github.com/firatmio/preweather/security/advisories/new
+Expires: 2026-10-05T00:00:00.000Z
+Preferred-Languages: en, tr
+Canonical: https://preweather.vercel.app/.well-known/security.txt
+
+# Encryption key (optional)
+# Encryption: https://example.com/pgp-key.txt
+
+# Policy
+Policy: https://github.com/firatmio/preweather/blob/main/SECURITY.md
+
+# Acknowledgments
+Acknowledgments: https://github.com/firatmio/preweather/blob/main/SECURITY.md#hall-of-fame
+
+# Please report security vulnerabilities through GitHub Security Advisories
+# or by email. We appreciate responsible disclosure.

@@ -1,0 +1,29 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://preweather-nasa.vercel.app/sitemap.xml
+
+# Disallow API endpoints
+Disallow: /api/
+
+# Allow specific pages
+Allow: /
+Allow: /about
+Allow: /app
+Allow: /docs
+Allow: /apis
+
+# Crawl-delay (optional)
+Crawl-delay: 1
+
+# Popular search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

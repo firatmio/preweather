@@ -1,0 +1,52 @@
+{
+  "name": "PreWeather - NASA API × Prophet ML",
+  "short_name": "PreWeather",
+  "description": "Weather prediction application using NASA POWER API and Prophet machine learning model",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["weather", "utilities", "productivity"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Make Prediction",
+      "short_name": "Predict",
+      "description": "Go directly to weather prediction",
+      "url": "/app",
+      "icons": [
+        {
+          "src": "/logo.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Documentation",
+      "short_name": "Docs",
+      "description": "View documentation",
+      "url": "/docs",
+      "icons": [
+        {
+          "src": "/logo.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
