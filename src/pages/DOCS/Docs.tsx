@@ -166,7 +166,6 @@ export default function Docs() {
 
           <section ref={metricsRef} className="docs-article">
             <h2>{t('docs.metrics.title')}</h2>
-            <p>{t('docs.metrics.intro')}</p>
             <h3>{t('docs.metrics.toggle')}</h3>
             <p>{t('docs.metrics.toggle.p1')}</p>
             <p>{t('docs.metrics.toggle.p2')}</p>
