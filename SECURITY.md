@@ -86,7 +86,7 @@ Security updates will be announced through:
 ## Contact
 
 For any security-related questions, please contact:
-- **Email**: your-email@example.com
+- **Email**: firattunaarslan@gmail.com
 - **GitHub**: [@firatmio](https://github.com/firatmio)
 
 ---
