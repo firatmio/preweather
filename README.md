@@ -1,4 +1,4 @@
-# 🌤️ PreWeather
+# <img src="https://github.com/firatmio/preweather/blob/main/public/logo.png?raw=true" style="width: 36px; height: 36px"> PreWeather
 
 > **NASA POWER API × Prophet ML ile Gelecek Hava Durumu Tahminleri**
 
