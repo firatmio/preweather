@@ -7,7 +7,6 @@ export default function Docs() {
   const { t } = useTranslation();
   const [activeSection, setActiveSection] = useState('intro');
 
-  // Section refs
   const introRef = useRef<HTMLElement>(null);
   const startedRef = useRef<HTMLElement>(null);
   const locationRef = useRef<HTMLElement>(null);
@@ -19,7 +18,6 @@ export default function Docs() {
   const exportRef = useRef<HTMLElement>(null);
   const tipsRef = useRef<HTMLElement>(null);
 
-  // Sections array
   const sections = useMemo(() => [
     { id: 'intro', label: t('docs.nav.intro'), ref: introRef },
     { id: 'started', label: t('docs.nav.started'), ref: startedRef },
@@ -33,11 +31,10 @@ export default function Docs() {
     { id: 'tips', label: t('docs.nav.tips'), ref: tipsRef },
   ], [t]);
 
-  // Intersection Observer ile active section detection
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-20% 0px -70% 0px', // Üstten %20, alttan %70 offset
+      rootMargin: '-20% 0px -70% 0px',
       threshold: 0
     };
 
@@ -120,7 +117,6 @@ export default function Docs() {
             <p>{t('docs.location.step3.p2')}</p>
           </section>
 
-          {/* --- Date --- */}
           <section ref={dateRef} className="docs-article">
             <h2>{t('docs.date.title')}</h2>
             <p>{t('docs.date.p1')}</p>
@@ -136,7 +132,6 @@ export default function Docs() {
             </div>
           </section>
 
-          {/* --- Prediction --- */}
           <section ref={predictionRef} className="docs-article">
             <h2>{t('docs.prediction.title')}</h2>
             <h3>{t('docs.prediction.button')}</h3>
@@ -148,7 +143,6 @@ export default function Docs() {
             <p>{t('docs.prediction.loading.p3')}</p>
           </section>
 
-          {/* --- Results --- */}
           <section ref={resultsRef} className="docs-article">
             <h2>{t('docs.results.title')}</h2>
             <h3>{t('docs.results.panel')}</h3>
@@ -166,7 +160,6 @@ export default function Docs() {
             <p>{t('docs.results.weather.p3')}</p>
           </section>
 
-          {/* --- Metrics --- */}
           <section ref={metricsRef} className="docs-article">
             <h2>{t('docs.metrics.title')}</h2>
             <p>{t('docs.metrics.intro')}</p>
@@ -186,7 +179,6 @@ export default function Docs() {
             </div>
           </section>
 
-          {/* --- Climate --- */}
           <section ref={climateRef} className="docs-article">
             <h2>{t('docs.climate.title')}</h2>
             <h3>{t('docs.climate.button')}</h3>
@@ -204,7 +196,6 @@ export default function Docs() {
             </ul>
           </section>
 
-          {/* --- Export --- */}
           <section ref={exportRef} className="docs-article">
             <h2>{t('docs.export.title')}</h2>
             <h3>{t('docs.export.json')}</h3>
@@ -216,7 +207,6 @@ export default function Docs() {
             <p>{t('docs.export.usage.p2')}</p>
           </section>
 
-          {/* --- Tips --- */}
           <section ref={tipsRef} className="docs-article">
             <h2>{t('docs.tips.title')}</h2>
             <div className="docs-tips-grid">

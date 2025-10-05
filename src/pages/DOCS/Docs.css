@@ -1,4 +1,3 @@
-/* Docs Page - About benzeri açık tema */
 .docs-page {
   min-height: 100vh;
   background: transparent;
@@ -21,7 +20,6 @@
   line-height: 1.6;
 }
 
-/* Main Layout */
 .docs-main {
   max-width: 1400px;
   margin: 0 auto;
@@ -33,7 +31,6 @@
   align-items: start;
 }
 
-/* Sidebar Navigation */
 .docs-sidebar {
   position: sticky;
   top: 6.75rem;
@@ -91,7 +88,6 @@
   box-shadow: 0 2px 8px rgba(240, 85, 20, 0.3);
 }
 
-/* Content */
 .docs-content {
   background: white;
   border-radius: 16px;
@@ -99,7 +95,6 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Article Sections */
 .docs-article {
   margin-bottom: 4rem;
   scroll-margin-top: 100px;
@@ -138,7 +133,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* List Styles */
 .docs-list-simple {
   list-style: none;
   padding: 0;
@@ -159,7 +153,6 @@
   font-weight: 700;
 }
 
-/* Note Box */
 .docs-note {
   background: #fff5f0;
   border-left: 4px solid #f05514;
@@ -173,7 +166,6 @@
   font-size: 1.05rem;
 }
 
-/* Metrics Grid */
 .docs-metrics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -211,7 +203,6 @@
   line-height: 1.5;
 }
 
-/* Tips Grid */
 .docs-tips-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -245,7 +236,6 @@
   margin-top: 2px;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .docs-main {
     grid-template-columns: 1fr;

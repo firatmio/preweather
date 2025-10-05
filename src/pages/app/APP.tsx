@@ -46,7 +46,6 @@ export default function APP() {
   } | null>(null)
   const { t, language } = useTranslation()
   
-  // URL'den başlangıç değerlerini al
   const [point, setPoint] = useState<SelectedPoint | null>(() => {
     const lat = searchParams.get('lat')
     const lng = searchParams.get('lng')
@@ -120,7 +119,6 @@ export default function APP() {
     }
   })
 
-  // URL'i güncelle - point değiştiğinde
   useEffect(() => {
     const params = new URLSearchParams(searchParams)
     
@@ -135,7 +133,6 @@ export default function APP() {
     setSearchParams(params, { replace: true })
   }, [point])
 
-  // URL'i güncelle - date değiştiğinde
   useEffect(() => {
     const params = new URLSearchParams(searchParams)
     
@@ -170,17 +167,14 @@ export default function APP() {
     }
   }, [])
 
-  // Haritayı seçilen noktaya ortala (URL'den yükleme dahil)
   useEffect(() => {
     if (point && mapRef.current) {
-      // İlk yüklemede veya programatik değişikliklerde haritayı ortala
       const currentCenter = mapRef.current.getCenter()
       const distance = Math.sqrt(
         Math.pow(currentCenter.lat - point.lat, 2) + 
         Math.pow(currentCenter.lng - point.lng, 2)
       )
       
-      // Eğer nokta haritanın merkezinden uzaksa ortala
       if (distance > 0.01) {
         const targetZoom = Math.max(mapRef.current.getZoom(), 10)
         mapRef.current.flyTo([point.lat, point.lng], targetZoom, { 
@@ -544,7 +538,7 @@ export default function APP() {
 
     if (!AUTH_KEY) {
       console.error('VITE_AUTH_KEY is not defined in environment variables')
-      setAdviceParts(parts) // Keep original Turkish text
+      setAdviceParts(parts)
       return
     }
 
@@ -994,18 +988,15 @@ export default function APP() {
     return () => document.removeEventListener('mousedown', handler)
   }, [editingAddress])
 
-  // URL'den gelen koordinatlara haritayı yönlendir (sadece ilk yüklemede)
   useEffect(() => {
     if (point && mapRef.current) {
       const timer = setTimeout(() => {
         mapRef.current?.setView([point.lat, point.lng], 10, { animate: true })
-        // Reverse geocode'u da çağır
         reverseGeocode(point)
       }, 500)
       return () => clearTimeout(timer)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // Sadece ilk mount'ta çalışır
+  }, [])
 
   return (
     <div className="app-shell">
@@ -1377,7 +1368,6 @@ export default function APP() {
         className="app-map-wrapper"
         ref={mapWrapperRef}
       >
-        {/* Address overlay bottom center (always visible even if no point selected) */}
         <div
           className="addr-overlay"
           onClick={() => openAddressEditor()}
