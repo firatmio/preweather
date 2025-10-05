@@ -921,7 +921,6 @@ body.preload .addr-display:before {
 .readable-head {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
   font-size: 0.75rem;
   letter-spacing: 0.55px;
   text-transform: uppercase;
