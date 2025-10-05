@@ -23,7 +23,6 @@ PreWeather, NASA'nın POWER API'sini ve Facebook'un Prophet makine öğrenimi mo
 
 ### 🛠️ Teknik Özellikler
 - ⚡ **React 19** & **TypeScript** ile modern mimari
-- 🎨 **Responsive Design**: Mobil, tablet ve masaüstü uyumlu
 - 🌐 **Çok Dilli**: Türkçe & İngilizce desteği
 - 🔗 **URL State Management**: Paylaşılabilir linkler
 - 💾 **Local Storage**: Tercih hatırlama
@@ -153,23 +152,6 @@ preweather/
 ### Deployment
 - **Vercel** - Hosting & serverless functions
 - **Vercel Edge Network** - Global CDN
-
----
-
-## 📊 Metrikler
-
-PreWeather aşağıdaki meteoroloji metriklerini tahmin eder:
-
-| Metrik | Açıklama | Birim |
-|--------|----------|-------|
-| **T2M** | 2m yükseklikteki hava sıcaklığı | °C / °F |
-| **PRECTOTCORR** | Toplam yağış miktarı | mm/gün |
-| **RH2M** | Bağıl nem | % |
-| **WS2M** | Rüzgar hızı | m/s / km/h |
-| **QV2M** | Özgül nem | g/kg |
-| **T2MDEW** | Çiğ noktası sıcaklığı | °C |
-| **CLOUD_AMT** | Bulut miktarı | % |
-| **ALLSKY_SFC_SW_DWN** | Güneş radyasyonu | kWh/m²/gün |
 
 ---
 
