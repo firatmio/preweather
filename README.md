@@ -4,7 +4,7 @@
 
 PreWeather, NASA'nın POWER API'sini ve Facebook'un Prophet makine öğrenimi modelini kullanarak gelecek tarihler için hava durumu tahminleri yapan gelişmiş bir web uygulamasıdır.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://preweather.vercel.app)
+[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://preweather-nasa.vercel.app)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Made with React](https://img.shields.io/badge/Made%20with-React-61dafb.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
@@ -355,7 +355,7 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 - 🐛 **Bug Report**: [Issues](https://github.com/firatmio/preweather/issues)
 - 💡 **Feature Request**: [Discussions](https://github.com/firatmio/preweather/discussions)
 - 📧 **Email**: your-email@example.com
-- 🌐 **Website**: [preweather.vercel.app](https://preweather.vercel.app)
+- 🌐 **Website**: [preweather.vercel.app](https://preweather-nasa.vercel.app)
 
 ---
 
