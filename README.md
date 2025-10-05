@@ -1,8 +1,8 @@
 # <img src="https://github.com/firatmio/preweather/blob/main/public/logo.png?raw=true" style="width: 36px; height: 36px"> PreWeather
 
-> **NASA POWER API × Prophet ML ile Gelecek Hava Durumu Tahminleri**
+> **Future Weather Predictions with NASA POWER API × Prophet ML**
 
-PreWeather, NASA'nın POWER API'sini ve Facebook'un Prophet makine öğrenimi modelini kullanarak gelecek tarihler için hava durumu tahminleri yapan gelişmiş bir web uygulamasıdır.
+PreWeather is an advanced web application that predicts future weather conditions using NASA’s POWER API and Facebook’s Prophet machine learning model.
 
 [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://preweather-nasa.vercel.app)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -11,210 +11,131 @@ PreWeather, NASA'nın POWER API'sini ve Facebook'un Prophet makine öğrenimi mo
 
 ---
 
-## ✨ Özellikler
+## ✨ Features
 
-### 🎯 Temel Özellikler
-- 🗺️ **İnteraktif Harita**: Leaflet tabanlı dünya haritasında istediğiniz noktaya tıklayın
-- 🔍 **Adres Arama**: OpenStreetMap Nominatim API ile dünya çapında konum arama
-- 📅 **Tarih Seçimi**: 365 gün ileriye kadar tahmin yapma imkanı
-- 🌡️ **8 Farklı Metrik**: Sıcaklık, yağış, nem, rüzgar, bulutluluk ve daha fazlası
-- 🤖 **AI Önerileri**: DeepL API ile çok dilli tarımsal öneriler
-- 📊 **İklim Verileri**: Geçmiş 25 yıldaki veriler ve görselleştirme
+### 🎯 Core Features
+- 🗺️ **Interactive Map**: Click anywhere on the world map powered by Leaflet  
+- 🔍 **Address Search**: Global geocoding via OpenStreetMap Nominatim API  
+- 📅 **Date Selection**: Forecasts available up to 365 days ahead  
+- 🌡️ **8 Metrics**: Temperature, precipitation, humidity, wind, cloud cover, and more  
+- 🤖 **AI Suggestions**: Multilingual agricultural insights via DeepL API  
+- 📊 **Climate Data**: Visualization of historical data from the past 25 years  
 
-### 🛠️ Teknik Özellikler
-- ⚡ **React 19** & **TypeScript** ile modern mimari
-- 🌐 **Çok Dilli**: Türkçe & İngilizce desteği
-- 🔗 **URL State Management**: Paylaşılabilir linkler
-- 💾 **Local Storage**: Tercih hatırlama
-- 📤 **Veri Dışa Aktarma**: JSON, CSV, PNG, PDF formatları
+### 🛠️ Technical Features
+- ⚡ **React 19** & **TypeScript** for a modern architecture  
+- 🌐 **Multilingual Support**: English & Turkish  
+- 🔗 **URL State Management**: Shareable forecast URLs  
+- 💾 **Local Storage**: Persistent user preferences  
+- 📤 **Data Export**: JSON, CSV, PNG, and PDF formats  
 
 ---
 
-## 🚀 Hızlı Başlangıç
+## 🚀 Quick Start
 
-### Gereksinimler
-- Node.js 18+ 
-- npm veya yarn
+### Requirements
+- Node.js 18+
+- npm or yarn
 - Git
 
-### Kurulum
+### Installation
 
 ```bash
-# Repository'yi klonlayın
 git clone https://github.com/firatmio/preweather.git
 cd preweather
-
-# Bağımlılıkları yükleyin
 npm install
-
-# Environment değişkenlerini ayarlayın
 cp .env.example .env.local
-# .env.local dosyasını düzenleyin (aşağıya bakın)
-
-# Development sunucusunu başlatın
 npm run dev
 ```
 
-### Environment Değişkenleri
-
-`.env.local` dosyası oluşturun ve aşağıdaki değişkenleri ekleyin:
+### Environment Variables
 
 ```env
-# DeepL API Key (Çeviri için)
 VITE_AUTH_KEY=your-deepl-api-key
-
-# Backend API URL (Prophet ML servisi)
 VITE_RUST_URL=your-backend-url
 ```
 
-**DeepL API Key Alma:**
-1. [DeepL](https://www.deepl.com/pro-api) hesabı oluşturun
-2. Free tier ile ayda 500,000 karakter ücretsiz
-3. API key'i kopyalayın
-
 ---
 
-## 📦 Komutlar
+## 📦 Commands
 
 ```bash
-# Development sunucusu (http://localhost:5173)
 npm run dev
-
-# Production build
 npm run build
-
-# Build önizleme
 npm run preview
-
-# Linting
 npm run lint
-
-# Type check
 npx tsc --noEmit
 ```
 
 ---
 
-## 🏗️ Proje Yapısı
+## 🏗️ Project Structure
 
 ```
 preweather/
-├── api/                      # Vercel Serverless Functions
-│   └── translate.ts          # DeepL API proxy
-├── public/                   # Static assets
+├── api/
+│   └── translate.ts
+├── public/
 │   ├── logo.ico
 │   └── logo.png
 ├── src/
-│   ├── assets/               # Images, fonts
-│   ├── components/           # React components
-│   │   └── Header/           # Navigation header
-│   ├── contexts/             # React contexts
-│   │   └── TranslationContext.tsx  # i18n
-│   ├── pages/                # Route pages
-│   │   ├── About/            # Hakkında sayfası
-│   │   ├── apis/             # API listesi
-│   │   ├── app/              # Ana uygulama
-│   │   ├── DOCS/             # Dokümantasyon
-│   │   └── Home/             # Landing page
-│   ├── App.css
-│   ├── App.tsx               # Route definitions
-│   ├── index.css             # Global styles
-│   ├── Layout.tsx            # Layout wrapper
-│   └── main.tsx              # Entry point
-├── .env.local                # Environment variables (git ignored)
+│   ├── assets/
+│   ├── components/
+│   │   └── Header/
+│   ├── contexts/
+│   │   └── TranslationContext.tsx
+│   ├── pages/
+│   │   ├── About/
+│   │   ├── apis/
+│   │   ├── app/
+│   │   ├── DOCS/
+│   │   └── Home/
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── .env.local
 ├── package.json
 ├── tsconfig.json
 ├── vite.config.ts
-├── vercel.json               # Vercel deployment config
+├── vercel.json
 └── README.md
 ```
 
 ---
 
-## 🌍 Kullanılan Teknolojiler
+## 🌍 Technologies Used
 
 ### Frontend
-- **React 19.1** - UI library
-- **TypeScript 5.9** - Type safety
-- **Vite 7.1** - Build tool & dev server
-- **React Router 7.9** - Client-side routing
-- **Leaflet & React Leaflet** - Interactive maps
-- **Three.js** - 3D graphics
-- **React Icons** - Icon library
-- **jsPDF** - PDF generation
+- **React 19.1**
+- **TypeScript 5.9**
+- **Vite 7.1**
+- **React Router 7.9**
+- **Leaflet & React Leaflet**
+- **Three.js**
+- **React Icons**
+- **jsPDF**
 
 ### APIs & Services
-- **NASA POWER API** - Meteoroloji ve iklim verileri
-- **DeepL API** - Çeviri servisi
-- **OpenStreetMap Nominatim** - Geocoding
-- **Prophet ML Model** - Zaman serisi tahminleri (Backend)
+- **NASA POWER API**
+- **DeepL API**
+- **OpenStreetMap Nominatim**
+- **Prophet ML Model**
 
 ### Deployment
-- **Vercel** - Hosting & serverless functions
-- **Vercel Edge Network** - Global CDN
+- **Vercel**
+- **Vercel Edge Network**
 
 ---
 
-## 🎨 Özellik Detayları
+## 🎨 Feature Details
 
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/7f8183c0-2b06-4691-801c-8d8fa8a117d2" />
-
-### 1. İnteraktif Harita
-- Dünya çapında herhangi bir noktaya tıklayın
-- Otomatik reverse geocoding ile adres tespiti
-- Su alanı kontrolü
-- Zoom ve pan özellikleri
-
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/72eebd76-875f-498e-8325-3f9f7e319ddb" />
-
-### 2. Tarih Seçimi
-- Modern takvim picker
-- Sadece gelecek tarihler seçilebilir
-- Maksimum 365 gün ileri
-- Format: DD.MM.YYYY
-
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/5aef65fd-9a27-4780-8ac7-ed3ab6b26c1a" />
-
-### 3. Tahmin Sonuçları
-- 8 farklı metrik için tahmin değerleri
-- Görsel hava durumu ikonları
-- Güvenilirlik skorları
-- AI destekli tarımsal öneriler
-
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/e1cdd403-da10-47a2-a1bd-ceab54531a9a" />
-
-### 4. İklim Verileri
-- 1981-2010 yılları arası geçmiş veriler
-- İnteraktif çizgi grafikler
-- Metrik seçimi
-- PNG & PDF export
-
-Türkçe
-<img width="1918" height="1079" alt="image" src="https://github.com/user-attachments/assets/5584c471-46e1-4919-8120-a29641a2c3f1" />
-
-İngilizce
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/f509e37d-d056-40f6-b3b4-dfbd165f8cc8" />
-
-### 5. Çok Dilli Destek
-- Türkçe & İngilizce
-- DeepL API ile yüksek kaliteli çeviri
-- Otomatik dil algılama
-
-### 6. URL State Management
-```
-/app?lat=39.925533&lng=32.866287&date=2025-10-15
-```
-- Paylaşılabilir linkler
-- Tarayıcı geçmişi desteği
-- Bookmark edilebilir
+(Images and details same as Turkish version)
 
 ---
 
-## 🔧 Konfigürasyon
+## 🔧 Configuration
 
 ### Vercel Deployment
 
-`vercel.json`:
 ```json
 {
   "rewrites": [
@@ -224,104 +145,58 @@ Türkçe
 }
 ```
 
-### Vite Config
-
-`vite.config.ts`:
-```typescript
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 5173,
-    host: true
-  }
-})
-```
-
 ---
 
 ## 🚢 Deployment
 
-### Vercel'e Deploy
-
 ```bash
-# Vercel CLI yükle
 npm i -g vercel
-
-# Login
 vercel login
-
-# Deploy
 vercel --prod
 ```
 
-**Environment Variables (Vercel Dashboard):**
-1. Settings → Environment Variables
-2. `VITE_AUTH_KEY` ekle
-3. Production, Preview, Development seç
-4. Redeploy
+---
 
-### Manuel Build
+## 🤝 Contributing
 
-```bash
-npm run build
-# dist/ klasörü oluşur
-# Bu klasörü herhangi bir static hosting'e deploy edin
-```
+1. Fork the repository  
+2. Create a new branch  
+3. Commit your changes  
+4. Push and open a PR
 
 ---
 
-## 🤝 Katkıda Bulunma
+## 📄 License
 
-Katkılarınızı bekliyoruz! 
-
-1. Fork edin
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Commit edin (`git commit -m 'feat: add amazing feature'`)
-4. Push edin (`git push origin feature/amazing-feature`)
-5. Pull Request açın
-
-### Commit Kuralları
-- `feat:` Yeni özellik
-- `fix:` Bug düzeltme
-- `docs:` Dokümantasyon
-- `style:` Stil değişiklikleri
-- `refactor:` Kod yeniden yapılandırma
-- `test:` Test ekleme
-- `chore:` Diğer değişiklikler
+MIT License
 
 ---
 
-## 📄 Lisans
+## 👨‍💻 Developers
 
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
+**Fırat Tuna Arslan**  
+- GitHub: [@firatmio](https://github.com/firatmio)  
+- Email: firattunaarslan@gmail.com  
 
----
-
-## 👨‍💻 Geliştirici
-
-**Fırat Tuna Arslan**
-- GitHub: [@firatmio](https://github.com/firatmio)
-- Email: firattunaarslan@gmail.com
-
-**Arda Balcı**
-- GitHub: [@EdenBulurHakan59](https://github.com/EdenBulurHakan59)
-- Email: arda_balci24@trabzon.edu.tr
+**Arda Balcı**  
+- GitHub: [@EdenBulurHakan59](https://github.com/EdenBulurHakan59)  
+- Email: arda_balci24@trabzon.edu.tr  
 
 ---
 
-## 🙏 Teşekkürler
+## 🙏 Acknowledgements
 
-- [NASA POWER Project](https://power.larc.nasa.gov/) - Meteoroloji verileri
-- [Facebook Prophet](https://facebook.github.io/prophet/) - ML modeli
-- [OpenStreetMap](https://www.openstreetmap.org/) - Harita verileri
-- [DeepL](https://www.deepl.com/) - Çeviri servisi
-- [Vercel](https://vercel.com/) - Hosting
+- [NASA POWER Project](https://power.larc.nasa.gov/)  
+- [Facebook Prophet](https://facebook.github.io/prophet/)  
+- [OpenStreetMap](https://www.openstreetmap.org/)  
+- [DeepL](https://www.deepl.com/)  
+- [Vercel](https://vercel.com/)  
 
 ---
 
 <div align="center">
 
-**⭐ Beğendiyseniz yıldız vermeyi unutmayın! ⭐**
+**⭐ If you like this project, don’t forget to star it! ⭐**
 
 Made with ❤️ and ☕ by [Fırat Tuna Arslan](https://github.com/firatmio)
 
