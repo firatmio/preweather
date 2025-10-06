@@ -135,7 +135,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Documentation
 - Comprehensive README.md
 - Contributing guidelines
-- MIT License
+- Apache License 2.0
 - Environment variables template
 - Code of conduct
 - Changelog (this file)
