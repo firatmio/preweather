@@ -1540,7 +1540,7 @@ body.preload .addr-display:before {
     font-size: 0.58rem;
   }
   .addr-editor {
-    padding-bottom: calc(1rem - .35rem);
+    padding-bottom: calc(.9rem - .35rem);
   }
   .addr-overlay {
     position: fixed;
