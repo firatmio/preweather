@@ -1569,7 +1569,7 @@ body.preload .addr-display:before {
   }
   .app-sidebar {
     width: 100vw;
-    height: 35vh;
+    height: 30vh;
     border-radius: 0; 
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem;
