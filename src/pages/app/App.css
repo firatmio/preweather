@@ -1595,9 +1595,12 @@ body.preload .addr-display:before {
     margin-top: 0;
     margin-bottom: 0;
     padding-bottom: 0;
+    padding-top: .75rem;
   }
   .readable-list {
     gap: 0.7rem;
+    max-height: calc(100vh - 38px - 1rem - 5rem);
+    overflow-y: scroll;
   }
   .readable-head {
     display: none;
@@ -1660,6 +1663,7 @@ body.preload .addr-display:before {
     height: 20px;
   }
   .app-sidebar {
+    overflow: hidden;
     padding-top: 1rem;
     width: 100vw;
     height: fit-content;
