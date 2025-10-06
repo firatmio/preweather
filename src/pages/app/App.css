@@ -1576,6 +1576,7 @@ body.preload .addr-display:before {
     position: fixed;
     left: 0; right: 0; bottom: 0;
     border-top: 1px solid rgba(255, 255, 255, .1);
+    border-right: none;
   }
 }
 
