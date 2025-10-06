@@ -1622,6 +1622,7 @@ body.preload .addr-display:before {
     max-width: calc(100vw - 2rem);
     width: calc(100vw - 2rem);
     font-size: 0.58rem;
+    padding: .65rem .95rem;
   }
   .addr-overlay .addr-editor {
     padding-bottom: calc(0.825rem - 0rem);
