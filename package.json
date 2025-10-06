@@ -5,7 +5,7 @@
   "type": "module",
   "description": "NASA POWER API × Prophet ML ile gelecek hava durumu tahminleri",
   "author": "Fırat Tuna Arslan <firattunaarslan@gmail.com>",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/firatmio/preweather.git"

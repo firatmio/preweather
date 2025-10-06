@@ -5,7 +5,7 @@
 PreWeather is an advanced web application that predicts future weather conditions using NASA’s POWER API and Facebook’s Prophet machine learning model.
 
 [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://preweather-nasa.vercel.app)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Made with React](https://img.shields.io/badge/Made%20with-React-61dafb.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
 
@@ -168,7 +168,7 @@ vercel --prod
 
 ## 📄 License
 
-MIT License
+Apache License 2.0
 
 ---
 
