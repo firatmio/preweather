@@ -1566,6 +1566,10 @@ body.preload .addr-display:before {
   }
   .addr-editor {
     width: 90vw;
+    gap: 0;
+  }
+  .addr-suggestions {
+    margin-top: .35rem;
   }
   .app-sidebar {
     width: 100vw;
