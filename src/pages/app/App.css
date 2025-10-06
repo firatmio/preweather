@@ -1545,6 +1545,16 @@ body.preload .addr-display:before {
     height: fit-content;
     align-items: start;
   }
+  .addr-location-icon {
+    width: 16px;
+    height: 16px;
+  }
+  .sidebar-section.head {
+    display: none;
+  }
+  .addr-text {
+    font-size: 0.95rem;
+  }
   .addr-shortcut-hint {
     display: none;
   }
