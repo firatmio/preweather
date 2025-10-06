@@ -1552,6 +1552,9 @@ body.preload .addr-display:before {
   .sidebar-section.head {
     display: none;
   }
+  .predict-btn.disabled {
+    display: none;
+  }
   .addr-text {
     font-size: 0.95rem;
   }
