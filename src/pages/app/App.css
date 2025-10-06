@@ -1606,7 +1606,7 @@ body.preload .addr-display:before {
     display: none;
   }
   .readable-list li {
-    padding: .65rem .75rem;
+    padding: .75rem .85rem;
   }
   .readable-list li .lab {
     font-size: 1rem;
