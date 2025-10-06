@@ -1668,7 +1668,7 @@ body.preload .addr-display:before {
     width: 100vw;
     height: fit-content;
     min-height: 30vh;
-    max-height: calc(100vh - 2rem - 40px);
+    max-height: calc(50rem);
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem;
     position: fixed;
