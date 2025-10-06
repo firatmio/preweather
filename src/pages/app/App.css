@@ -1655,7 +1655,12 @@ body.preload .addr-display:before {
   .addr-suggestions {
     margin-top: 0.35rem;
   }
+  .sidebar-header .reload-btn svg {
+    width: 20px;
+    height: 20px;
+  }
   .app-sidebar {
+    padding-top: 1rem;
     width: 100vw;
     height: fit-content;
     min-height: 30vh;
@@ -1669,6 +1674,11 @@ body.preload .addr-display:before {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     border-right: none;
     transition: height 0.2s ease;
+  }
+  .app-sidebar::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
   }
   .unit-toggle-row {
     display: none;
