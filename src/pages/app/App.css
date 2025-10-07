@@ -1,12 +1,15 @@
 .climate-modal-overlay {
   position: fixed;
   z-index: 99999;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(20,20,30,0.82);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(20, 20, 30, 0.82);
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeIn .2s;
+  animation: fadeIn 0.2s;
   backdrop-filter: blur(2.5px);
 }
 .climate-modal {
@@ -31,9 +34,9 @@
   color: #fff;
   border: none;
   font-size: 2.1rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   cursor: pointer;
-  transition: background .18s;
+  transition: background 0.18s;
   z-index: 2;
 }
 .climate-modal-close:hover {
@@ -51,18 +54,47 @@
   border-radius: 12px;
   box-shadow: 0 2px 12px #0006;
 }
+.sidebar-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.sidebar-header .reload-btn {
+  background-color: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 16px;
+  border-radius: 0.5rem;
+  width: fit-content;
+  height: fit-content;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+}
+
+.sidebar-header .reload-btn:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header .reload-btn svg {
+  width: 16px;
+  height: 16px;
+}
 .climate-btn {
   background: #1976d2;
   color: #fff;
   border: none;
-  border-radius: .6rem;
+  border-radius: 0.6rem;
   width: 100%;
   padding: 0.6rem 1.4rem;
   font-size: 1.08rem;
   font-weight: 500;
   margin-top: 0.7rem;
   cursor: pointer;
-  transition: background .18s;
+  transition: background 0.18s;
   box-shadow: 0 1px 6px #0002;
 }
 .climate-btn:hover {
@@ -84,7 +116,7 @@
   background: #2a2a2aee;
   box-shadow: 0 2px 16px 0 #0005;
   opacity: 1;
-  animation: infoBlobFade 2.5s cubic-bezier(.4,1.6,.6,1) forwards;
+  animation: infoBlobFade 2.5s cubic-bezier(0.4, 1.6, 0.6, 1) forwards;
   pointer-events: none;
   text-align: center;
 }
@@ -101,10 +133,22 @@
   color: #fff;
 }
 @keyframes infoBlobFade {
-  0% { opacity: 0; transform: translateX(-50%) scale(.95); }
-  10% { opacity: 1; transform: translateX(-50%) scale(1.03); }
-  90% { opacity: 1; transform: translateX(-50%) scale(1); }
-  100% { opacity: 0; transform: translateX(-50%) scale(.97); }
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.95);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.03);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.97);
+  }
 }
 body.preload * {
   transition: none !important;
@@ -509,14 +553,14 @@ body.preload .addr-display:before {
 }
 .dl-btn.csv {
   background: linear-gradient(135deg, #1e2934, #162029);
-  transition: all .25s ease;
+  transition: all 0.25s ease;
 }
 .dl-btn.csv:hover {
   background: linear-gradient(135deg, #263543, #1d2731);
 }
 .dl-btn.json {
   background: linear-gradient(135deg, #1e2934, #162029);
-    transition: all .25s ease;
+  transition: all 0.25s ease;
 }
 .dl-btn.json:hover {
   background: linear-gradient(135deg, #263543, #1d2731);
@@ -1007,7 +1051,7 @@ body.preload .addr-display:before {
 .unit-toggle-row {
   display: flex;
   align-items: center;
-  gap: .2rem;
+  gap: 0.2rem;
   margin: 0.55rem 0 0.4rem;
   font-size: 0.6rem;
   letter-spacing: 0.4px;
@@ -1530,17 +1574,65 @@ body.preload .addr-display:before {
     opacity: 1;
   }
 }
-@media (max-width: 1120px) {
-  .addr-overlay {
-    bottom: 12px;
+@media (max-width: 600px) {
+  .ai-insights-body {
+    display: none;
+  }
+  .ai-insights-head {
+    display: none;
+  }
+  .top-center-stats {
+    display: none;
+  }
+  .readable-summary {
+    padding: 1rem;
+    margin-right: -1.3rem;
+    margin-left: -1.3rem;
+    border: none;
+    background-color: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 0.75rem;
+  }
+  .readable-list {
+    gap: 0.7rem;
+    max-height: calc(100vh - 38px - 1rem - 5rem);
+    overflow-y: scroll;
+  }
+  .readable-head {
+    display: none;
+  }
+  .readable-list li {
+    padding: 0.75rem 0.85rem;
+  }
+  .readable-list li .lab {
+    font-size: 1rem;
+  }
+  .readable-list li .ic svg {
+    width: 15px;
+    height: 15px;
+  }
+  .readable-list li .val {
+    font-size: 1rem;
   }
   .addr-display {
-    min-width: 200px;
     max-width: calc(100vw - 2rem);
+    width: calc(100vw - 2rem);
     font-size: 0.58rem;
+    padding: .65rem .95rem;
   }
-  .addr-editor {
-    padding-bottom: calc(.825rem - .35rem);
+  .addr-overlay .addr-editor {
+    padding-bottom: calc(0.825rem - 0rem);
+    width: 100vw;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    top: -1rem;
+    left: 0;
+    right: 0;
+    box-shadow: 0 0 25px rgb(255, 255, 255, .05);
   }
   .addr-overlay {
     position: fixed;
@@ -1553,9 +1645,6 @@ body.preload .addr-display:before {
     height: 16px;
   }
   .sidebar-section.head {
-    display: none;
-  }
-  .predict-btn.disabled {
     display: none;
   }
   .addr-text {
@@ -1572,18 +1661,66 @@ body.preload .addr-display:before {
     gap: 0;
   }
   .addr-suggestions {
-    margin-top: .35rem;
+    margin-top: 0.35rem;
+  }
+  .sidebar-header .reload-btn svg {
+    width: 20px;
+    height: 20px;
   }
   .app-sidebar {
+    overflow: hidden;
+    padding-top: 1rem;
     width: 100vw;
-    height: 30vh;
-    border-radius: 0; 
+    height: fit-content;
+    min-height: 30vh;
+    max-height: calc(50rem);
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem;
     position: fixed;
-    left: 0; right: 0; bottom: 0;
-    border-top: 1px solid rgba(255, 255, 255, .1);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     border-right: none;
+    transition: height 0.2s ease;
+    box-shadow: 0 0 25px rgb(255, 255, 255, .05);
+  }
+  .app-sidebar::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+  
+  .unit-toggle-row {
+    display: none;
+  }
+  .gelismis {
+    display: none;
+  }
+  .pw-cal-footer button {
+    font-size: 0.75rem;
+  }
+  .pw-calendar-pop {
+    position: relative;
+    width: 100%;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    width: calc(100% + 2rem);
+    border-radius: 0;
+    border: none;
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+  .predict-btn:disabled {
+    display: relative;
+  }
+  .predict-btn {
+    position: relative;
+  }
+  .sidebar-select-side {
+    margin-bottom: 4rem;
+    padding-top: 0.35rem;
   }
 }
 
