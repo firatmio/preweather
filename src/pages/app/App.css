@@ -1530,7 +1530,7 @@ body.preload .addr-display:before {
     opacity: 1;
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 1120px) {
   .addr-overlay {
     bottom: 12px;
   }
