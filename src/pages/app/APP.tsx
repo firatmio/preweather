@@ -14,6 +14,7 @@ import {
 import { GiFleshyMass } from 'react-icons/gi';
 import { MdSunny } from 'react-icons/md';
 import { PiSparkleFill, PiSunHorizonBold } from 'react-icons/pi';
+import { TbReload } from 'react-icons/tb';
 import { TiArrowLeftThick } from 'react-icons/ti';
 import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 import { Link, useSearchParams } from 'react-router';
@@ -606,8 +607,11 @@ export default function APP() {
             adviceTranslationCacheRef.current.set(cacheKey, translated)
             return { ...part, content: translated }
           }
-        } catch (err) {
-          console.error('Translation failed for part:', part.labelKey, err)
+        } catch (err: any) {
+          // Don't log abort errors - they're expected when component unmounts or language changes
+          if (err.name !== 'AbortError') {
+            console.error('Translation failed for part:', part.labelKey, err)
+          }
         }
         return part
       }),
@@ -638,7 +642,7 @@ export default function APP() {
       setAddrServerError(false)
       setWaterDetected(false)
       waterDetectedRef.current = false
-      const urlBase = `https://nominatim.openstreetmap.org/reverse?lat=${pt.lat}&lon=${pt.lng}&format=jsonv2&accept-language=${language}`
+      const urlBase = `/api/geocode?type=reverse&lat=${pt.lat}&lon=${pt.lng}&lang=${language}`
       let data: any = null
       let attempt = 0
       let lastStatus = 0
@@ -727,9 +731,9 @@ export default function APP() {
     const controller = new AbortController()
     const handler = setTimeout(async () => {
       try {
-        const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&accept-language=${language}&q=${encodeURIComponent(
+        const url = `/api/geocode?type=search&q=${encodeURIComponent(
           q,
-        )}`
+        )}&lang=${language}`
         const res = await fetch(url, {
           signal: controller.signal,
           headers: { Accept: 'application/json' },
@@ -1147,7 +1151,14 @@ export default function APP() {
                 {result && (
                   <>
                     <div className="results">
-                      <h3>{t('app.results.title')}</h3>
+                      <div className="sidebar-header">
+                        <h3>{t('app.results.title')}</h3>
+                        <div className="reload">
+                          <button className="reload-btn" onClick={() => setResult(null)}>
+                            <TbReload />
+                          </button>
+                        </div>
+                      </div>
                       <div className="unit-toggle-row">
                         <div
                           className="ut-switch"
