@@ -20,6 +20,7 @@ const translations = {
     'nav.apis': "API'ler",
     'nav.docs': 'Dokümantasyon',
     'nav.app': 'Uygulama',
+    'sidebar.title': 'Seçenekeler',
 
     'home.badge': 'NASA API × Prophet ML',
     'home.title.main': 'Geleceğin Hava Durumunu',
@@ -339,6 +340,7 @@ const translations = {
     'nav.apis': 'APIs',
     'nav.docs': 'Documentation',
     'nav.app': 'App',
+    'sidebar.title': 'Selections',
 
     'home.badge': 'NASA API × Prophet ML',
     'home.title.main': 'Predict the Future',

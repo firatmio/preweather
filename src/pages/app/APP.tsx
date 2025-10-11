@@ -12,7 +12,7 @@ import {
   FaWind,
 } from 'react-icons/fa6';
 import { GiFleshyMass } from 'react-icons/gi';
-import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdSunny } from 'react-icons/md';
+import { MdKeyboardArrowUp, MdSunny } from 'react-icons/md';
 import { PiSparkleFill, PiSunHorizonBold } from 'react-icons/pi';
 import { TbReload } from 'react-icons/tb';
 import { TiArrowLeftThick } from 'react-icons/ti';
@@ -1071,6 +1071,7 @@ export default function APP() {
             <div className="sidebar-top-control-area" style={{
               display: !hasValidPoint ? 'none' : 'flex',
             }} onClick={() => setIsOpened(!isOpened)}>
+              <span>{t('sidebar.title')}</span>
               <button className={`expand-toggle ${isOpened ? 'opened' : 'closed'}`} onClick={() => setIsOpened(!isOpened)}>
                 <MdKeyboardArrowUp />
               </button>
@@ -1158,7 +1159,7 @@ export default function APP() {
                 )}
                 {result && (
                   <>
-                    <div className="results">
+                    <div className={`results ${isOpened ? 'opened': 'closed'}`}>
                       <div className="sidebar-header">
                         <h3>{t('app.results.title')}</h3>
                         <div className="reload">

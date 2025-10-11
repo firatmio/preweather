@@ -1572,7 +1572,7 @@ body.preload .addr-display:before {
 .sidebar-top-control-area {
   display: none;
   align-items: center;
-  justify-content: end;
+  justify-content: space-between;
 }
 
 .expand-toggle {
@@ -1627,6 +1627,7 @@ body.preload .addr-display:before {
 .sidebar-select-side.expanded {
   animation: openSidebar .25s ease;
   height: 100%;
+  margin-top: -1rem;
 }
 
 .sidebar-select-side.collapsed {
@@ -1668,9 +1669,6 @@ body.preload .addr-display:before {
 }
 
 @media (max-width: 1120px) {
-  .ai-insights-body {
-    display: none;
-  }
   .sidebar-top-control-area {
     display: flex;
   }
@@ -1770,8 +1768,6 @@ body.preload .addr-display:before {
     padding-top: 1rem;
     width: 100vw;
     height: fit-content;
-    min-height: fit-content;
-    max-height: calc(50rem);
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem;
     position: fixed;
@@ -1782,7 +1778,9 @@ body.preload .addr-display:before {
     border-right: none;
     transition: height 0.2s ease;
     box-shadow: 0 0 25px rgb(255, 255, 255, .05);
+    max-height: 75vh;
   }
+  
   .app-sidebar.empty {
     min-height: 30vh;
   }
@@ -2038,4 +2036,13 @@ body.preload .addr-display:before {
   left: 1.25rem;
   right: 1.25rem;
   bottom: 1.25rem;
+}
+
+.results.opened {
+  display: block;
+  margin-top: -1rem;
+}
+
+.results.closed {
+  display: none;
 }
