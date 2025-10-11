@@ -1,7 +1,8 @@
-import L from 'leaflet';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { AiOutlineLoading } from 'react-icons/ai';
-import { FaDownload, FaRegSnowflake } from 'react-icons/fa';
+import L from 'leaflet'
+import * as mgrs from 'mgrs'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { AiOutlineLoading } from 'react-icons/ai'
+import { FaDownload, FaRegSnowflake } from 'react-icons/fa'
 import {
   FaCloudRain,
   FaExclamation,
@@ -10,19 +11,21 @@ import {
   FaTemperatureHalf,
   FaWater,
   FaWind,
-} from 'react-icons/fa6';
-import { GiFleshyMass } from 'react-icons/gi';
-import { MdKeyboardArrowUp, MdSunny } from 'react-icons/md';
-import { PiSparkleFill, PiSunHorizonBold } from 'react-icons/pi';
-import { TbReload } from 'react-icons/tb';
-import { TiArrowLeftThick } from 'react-icons/ti';
-import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
-import { Link, useSearchParams } from 'react-router';
-import { ClimateModal } from '../../components/ClimateModal';
-import PwDatePicker from '../../components/DatePicker/DatePicker';
-import { useTranslation } from '../../contexts/TranslationContext';
-import './App.css';
-import { MetricOverlay } from './MetricOverlay';
+} from 'react-icons/fa6'
+import { GiFleshyMass } from 'react-icons/gi'
+import { MdKeyboardArrowUp, MdSunny } from 'react-icons/md'
+import { PiSparkleFill, PiSunHorizonBold } from 'react-icons/pi'
+import { TbReload } from 'react-icons/tb'
+import { TiArrowLeftThick } from 'react-icons/ti'
+import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet'
+import { Link, useSearchParams } from 'react-router'
+import { ClimateModal } from '../../components/ClimateModal'
+import type { CoordType } from '../../components/CoordTypeModal'
+import { CoordTypeModal } from '../../components/CoordTypeModal'
+import PwDatePicker from '../../components/DatePicker/DatePicker'
+import { useTranslation } from '../../contexts/TranslationContext'
+import './App.css'
+import { MetricOverlay } from './MetricOverlay'
 
 interface SelectedPoint {
   lat: number
@@ -39,6 +42,154 @@ interface GeoSuggestion {
 }
 
 export default function APP() {
+  // Convert fonksiyonları (dummy)
+  function handleLatLngConvert() {
+    // Lat/Lng stringlerini parse edip setPoint ile güncelle
+    const lat = parseFloat(latInput)
+    const lng = parseFloat(lngInput)
+    if (!isNaN(lat) && !isNaN(lng)) {
+      setPoint({ lat, lng })
+    } else {
+      setInfoBlob({ msg: t('app.coord.invalid'), type: 'error' })
+      setTimeout(() => setInfoBlob(null), 2500)
+    }
+  }
+  function handleUtmConvert() {
+    // UTM stringini parse edip setPoint ile güncelle (dummy)
+    // Gerçek UTM parse fonksiyonu eklenebilir
+    const parts = utmInput.split(',').map((s) => s.trim())
+    if (parts.length === 2) {
+      const lat = parseFloat(parts[0])
+      const lng = parseFloat(parts[1])
+      if (!isNaN(lat) && !isNaN(lng)) {
+        setPoint({ lat, lng })
+        return
+      }
+    }
+    setInfoBlob({ msg: t('app.coord.invalid'), type: 'error' })
+    setTimeout(() => setInfoBlob(null), 2500)
+  }
+  function handleDmsConvert() {
+    // DMS stringini parse edip setPoint ile güncelle
+    // Örnek: "39°55'44.5" 32°51'22.1""
+    const input = dmsInput.trim()
+    if (!input) return
+
+    try {
+      // DMS formatını parse et (örnek: 39°55'44.5" 32°51'22.1")
+      const coords = input.split(/\s+/)
+      if (coords.length !== 2) {
+        throw new Error('Invalid DMS format')
+      }
+
+      const parseDMS = (dmsStr: string): number => {
+        const match = dmsStr.match(/(-?\d+)°(\d+)'([\d.]+)"?/)
+        if (!match) throw new Error('Invalid DMS format')
+
+        const deg = parseInt(match[1])
+        const min = parseInt(match[2])
+        const sec = parseFloat(match[3])
+
+        const decimal = Math.abs(deg) + min / 60 + sec / 3600
+        return deg < 0 ? -decimal : decimal
+      }
+
+      const lat = parseDMS(coords[0])
+      const lng = parseDMS(coords[1])
+
+      if (
+        isNaN(lat) ||
+        isNaN(lng) ||
+        Math.abs(lat) > 90 ||
+        Math.abs(lng) > 180
+      ) {
+        throw new Error('Invalid coordinates')
+      }
+
+      const newPoint = { lat, lng }
+      const changed =
+        !point ||
+        Math.abs(point.lat - newPoint.lat) > 0.00005 ||
+        Math.abs(point.lng - newPoint.lng) > 0.00005
+
+      setPoint(newPoint)
+      if (changed) {
+        setResult(null)
+        setActiveMetric(null)
+        setMetricsEnabled({})
+        setError(null)
+      }
+
+      if (mapRef.current) {
+        const targetZoom = Math.max(mapRef.current.getZoom(), 12)
+        mapRef.current.flyTo([lat, lng], targetZoom, { duration: 1.1 })
+      }
+    } catch (error) {
+      console.error('DMS conversion error:', error)
+      setInfoBlob({ msg: t('app.coord.invalid'), type: 'error' })
+      setTimeout(() => setInfoBlob(null), 2500)
+    }
+  }
+  function handleDmConvert() {
+    // DM stringini parse edip setPoint ile güncelle
+    // Örnek: "39°55.742' 32°51.368'"
+    const input = dmInput.trim()
+    if (!input) return
+
+    try {
+      // DM formatını parse et (örnek: 39°55.742' 32°51.368')
+      const coords = input.split(/\s+/)
+      if (coords.length !== 2) {
+        throw new Error('Invalid DM format')
+      }
+
+      const parseDM = (dmStr: string): number => {
+        const match = dmStr.match(/(-?\d+)°([\d.]+)'?/)
+        if (!match) throw new Error('Invalid DM format')
+
+        const deg = parseInt(match[1])
+        const min = parseFloat(match[2])
+
+        const decimal = Math.abs(deg) + min / 60
+        return deg < 0 ? -decimal : decimal
+      }
+
+      const lat = parseDM(coords[0])
+      const lng = parseDM(coords[1])
+
+      if (
+        isNaN(lat) ||
+        isNaN(lng) ||
+        Math.abs(lat) > 90 ||
+        Math.abs(lng) > 180
+      ) {
+        throw new Error('Invalid coordinates')
+      }
+
+      const newPoint = { lat, lng }
+      const changed =
+        !point ||
+        Math.abs(point.lat - newPoint.lat) > 0.00005 ||
+        Math.abs(point.lng - newPoint.lng) > 0.00005
+
+      setPoint(newPoint)
+      if (changed) {
+        setResult(null)
+        setActiveMetric(null)
+        setMetricsEnabled({})
+        setError(null)
+      }
+
+      if (mapRef.current) {
+        const targetZoom = Math.max(mapRef.current.getZoom(), 12)
+        mapRef.current.flyTo([lat, lng], targetZoom, { duration: 1.1 })
+      }
+    } catch (error) {
+      console.error('DM conversion error:', error)
+      setInfoBlob({ msg: t('app.coord.invalid'), type: 'error' })
+      setTimeout(() => setInfoBlob(null), 2500)
+    }
+  }
   const [searchParams, setSearchParams] = useSearchParams()
   const [climateOpen, setClimateOpen] = useState(false)
   const [infoBlob, setInfoBlob] = useState<{
@@ -49,7 +200,7 @@ export default function APP() {
   useEffect(() => {
     document.title = `PreWeather - ${t('nav.app')}`
   }, [])
-  
+
   const [point, setPoint] = useState<SelectedPoint | null>(() => {
     const lat = searchParams.get('lat')
     const lng = searchParams.get('lng')
@@ -62,15 +213,17 @@ export default function APP() {
     }
     return null
   })
-  
+
   const [date, setDate] = useState<string>(() => {
     return searchParams.get('date') || ''
   })
-  
+
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<any>(null)
   const [checking, setChecking] = useState(false)
-  const [adviceParts, setAdviceParts] = useState<{labelKey: string | null; content: string}[]>([])
+  const [adviceParts, setAdviceParts] = useState<
+    { labelKey: string | null; content: string }[]
+  >([])
   const [adviceTranslating, setAdviceTranslating] = useState(false)
   const adviceTranslationCacheRef = useRef<Map<string, string>>(new Map())
   const [metricsEnabled, setMetricsEnabled] = useState<Record<string, boolean>>(
@@ -130,10 +283,35 @@ export default function APP() {
       return false
     }
   })
+  const [coordSystem, setCoordSystem] = useState<'latlon' | 'mgrs'>(() => {
+    try {
+      const saved = localStorage.getItem('pw.coordSystem')
+      return saved === 'mgrs' ? 'mgrs' : 'latlon'
+    } catch {
+      return 'latlon'
+    }
+  })
+  const [mgrsInput, setMgrsInput] = useState<string>('')
+  const [coordType, setCoordType] = useState<CoordType>('latlon')
+  const [coordModalOpen, setCoordModalOpen] = useState(false)
+  const [latInput, setLatInput] = useState('')
+  const [lngInput, setLngInput] = useState('')
+  const [utmInput, setUtmInput] = useState('')
+  const [dmsInput, setDmsInput] = useState('')
+  const [dmInput, setDmInput] = useState('')
+  const [showPOIs, setShowPOIs] = useState(false)
+  const [poiData, setPOIData] = useState<any[]>([])
+  const poiCacheRef = useRef<Map<string, any[]>>(new Map())
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('pw.coordSystem', coordSystem)
+    } catch {}
+  }, [coordSystem])
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams)
-    
+
     if (point) {
       params.set('lat', point.lat.toFixed(6))
       params.set('lng', point.lng.toFixed(6))
@@ -141,19 +319,19 @@ export default function APP() {
       params.delete('lat')
       params.delete('lng')
     }
-    
+
     setSearchParams(params, { replace: true })
   }, [point])
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams)
-    
+
     if (date) {
       params.set('date', date)
     } else {
       params.delete('date')
     }
-    
+
     setSearchParams(params, { replace: true })
   }, [date])
 
@@ -188,15 +366,15 @@ export default function APP() {
     if (point && mapRef.current) {
       const currentCenter = mapRef.current.getCenter()
       const distance = Math.sqrt(
-        Math.pow(currentCenter.lat - point.lat, 2) + 
-        Math.pow(currentCenter.lng - point.lng, 2)
+        Math.pow(currentCenter.lat - point.lat, 2) +
+          Math.pow(currentCenter.lng - point.lng, 2),
       )
-      
+
       if (distance > 0.01) {
         const targetZoom = Math.max(mapRef.current.getZoom(), 10)
-        mapRef.current.flyTo([point.lat, point.lng], targetZoom, { 
+        mapRef.current.flyTo([point.lat, point.lng], targetZoom, {
           duration: 1,
-          easeLinearity: 0.25
+          easeLinearity: 0.25,
         })
       }
     }
@@ -206,11 +384,11 @@ export default function APP() {
     if (address && address.trim()) {
       document.title = `PreWeather - ${address}`
     } else {
-      document.title = `PreWeather - ${t("nav.app")}`
+      document.title = `PreWeather - ${t('nav.app')}`
     }
 
     return () => {
-      document.title = `PreWeather - ${t("nav.app")}`
+      document.title = `PreWeather - ${t('nav.app')}`
     }
   }, [address])
 
@@ -342,7 +520,7 @@ export default function APP() {
           }
         }
         setPoint(newPoint)
-        
+
         if (changed) {
           setResult(null)
           setActiveMetric(null)
@@ -352,6 +530,10 @@ export default function APP() {
           setWaterDetected(false)
           waterDetectedRef.current = false
           reverseGeocode(newPoint)
+          // POI'leri getir
+          if (showPOIs) {
+            fetchPOIsAroundPoint(newPoint)
+          }
         }
       },
     })
@@ -403,7 +585,7 @@ export default function APP() {
         year,
       }
       let res: Response
-      const url = import.meta.env.VITE_RUST_URL as string;
+      const url = import.meta.env.VITE_RUST_URL as string
       try {
         res = await fetch(url, {
           method: 'POST',
@@ -536,7 +718,11 @@ export default function APP() {
       yorum: 'advice.yorum',
       öneri: 'advice.öneri',
     }
-    const parts: { labelKey: string | null; content: string; original: string }[] = []
+    const parts: {
+      labelKey: string | null
+      content: string
+      original: string
+    }[] = []
     const regex = /(?:^|\n|\r|\s)(Yorum|Öneri)\s*:\s*/gi
     let lastIndex = 0
     let match: RegExpExecArray | null
@@ -545,7 +731,8 @@ export default function APP() {
     while ((match = regex.exec(original)) !== null) {
       if (match.index > lastIndex) {
         const content = original.slice(lastIndex, match.index).trim()
-        if (content) parts.push({ labelKey: lastLabel, content, original: content })
+        if (content)
+          parts.push({ labelKey: lastLabel, content, original: content })
       }
       const keyRaw = match[1].toLowerCase()
       lastLabel = labelMap[keyRaw] || null
@@ -563,7 +750,7 @@ export default function APP() {
     let cancelled = false
     const controllers: AbortController[] = []
     const targetLang = 'EN'
-    const AUTH_KEY = import.meta.env.VITE_AUTH_KEY as string;
+    const AUTH_KEY = import.meta.env.VITE_AUTH_KEY as string
 
     if (!AUTH_KEY) {
       console.error('VITE_AUTH_KEY is not defined in environment variables')
@@ -580,7 +767,8 @@ export default function APP() {
         if (adviceTranslationCacheRef.current.has(cacheKey)) {
           return {
             ...part,
-            content: adviceTranslationCacheRef.current.get(cacheKey) || part.content,
+            content:
+              adviceTranslationCacheRef.current.get(cacheKey) || part.content,
           }
         }
         const controller = new AbortController()
@@ -790,6 +978,56 @@ export default function APP() {
     }
   }
 
+  const handleMgrsConvert = () => {
+    const input = mgrsInput.trim()
+    if (!input) return
+
+    try {
+      const [lng, lat] = mgrs.toPoint(input)
+      if (isNaN(lat) || isNaN(lng)) {
+        setInfoBlob({ msg: t('app.mgrs.invalid'), type: 'error' })
+        setTimeout(() => setInfoBlob(null), 2500)
+        return
+      }
+
+      const newPoint = { lat, lng }
+      const changed =
+        !point ||
+        Math.abs(point.lat - newPoint.lat) > 0.00005 ||
+        Math.abs(point.lng - newPoint.lng) > 0.00005
+
+      setPoint(newPoint)
+      if (changed) {
+        setResult(null)
+        setActiveMetric(null)
+        setMetricsEnabled({})
+        setError(null)
+      }
+
+      setTimeout(() => setInfoBlob(null), 2500)
+
+      if (mapRef.current) {
+        const targetZoom = Math.max(mapRef.current.getZoom(), 12)
+        mapRef.current.flyTo([lat, lng], targetZoom, { duration: 1.1 })
+      }
+    } catch (error) {
+      console.error('MGRS conversion error:', error)
+      setInfoBlob({ msg: t('app.mgrs.invalid'), type: 'error' })
+      setTimeout(() => setInfoBlob(null), 2500)
+    }
+  }
+
+  useEffect(() => {
+    if (coordSystem === 'mgrs' && point) {
+      try {
+        const mgrsStr = mgrs.forward([point.lng, point.lat])
+        setMgrsInput(mgrsStr)
+      } catch (error) {
+        console.error('MGRS forward conversion error:', error)
+      }
+    }
+  }, [point, coordSystem])
+
   const triggerAddrError = () => {
     setAddrErrorShake(true)
     setTimeout(() => setAddrErrorShake(false), 900)
@@ -853,6 +1091,58 @@ export default function APP() {
       overpassFailRef.current += 1
       waterCacheRef.current.set(key, false)
       return false
+    }
+  }
+
+  const fetchPOIsAroundPoint = async (pt: SelectedPoint) => {
+    const key = `${pt.lat.toFixed(3)},${pt.lng.toFixed(3)}`
+    if (poiCacheRef.current.has(key)) {
+      setPOIData(poiCacheRef.current.get(key) || [])
+      return
+    }
+
+    try {
+      const controller = new AbortController()
+      // Çevredeki POI'leri getir (marketler, restoranlar, bankalar, hastaneler vs.)
+      const query = `
+        [out:json][timeout:10];
+        (
+          node(around:2000,${pt.lat},${pt.lng})["shop"];
+          node(around:2000,${pt.lat},${pt.lng})["amenity"~"^(restaurant|cafe|bank|hospital|pharmacy|school|university|police|fire_station|post_office|fuel|atm)$"];
+          node(around:2000,${pt.lat},${pt.lng})["office"];
+          node(around:2000,${pt.lat},${pt.lng})["tourism"~"^(hotel|attraction|museum)$"];
+        );
+        out body;
+      `
+
+      const res = await fetch('https://overpass-api.de/api/interpreter', {
+        method: 'POST',
+        body: new URLSearchParams({ data: query }),
+        signal: controller.signal,
+      })
+
+      if (!res.ok) throw new Error('POI fetch failed')
+      const data = await res.json()
+
+      const pois = data.elements.map((el: any) => ({
+        id: el.id,
+        lat: el.lat,
+        lon: el.lon,
+        tags: el.tags,
+        type:
+          el.tags.shop ||
+          el.tags.amenity ||
+          el.tags.office ||
+          el.tags.tourism ||
+          'unknown',
+        name: el.tags.name || el.tags.brand || 'Unnamed',
+      }))
+
+      poiCacheRef.current.set(key, pois)
+      setPOIData(pois)
+    } catch (error) {
+      console.error('POI fetch error:', error)
+      setPOIData([])
     }
   }
 
@@ -1036,6 +1326,102 @@ export default function APP() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!point) {
+      setLatInput('')
+      setLngInput('')
+      setMgrsInput('')
+      setUtmInput('')
+      setDmsInput('')
+      setDmInput('')
+      return
+    }
+    if (coordType === 'latlon') {
+      setLatInput(point.lat.toString())
+      setLngInput(point.lng.toString())
+    } else if (coordType === 'mgrs') {
+      try {
+        setMgrsInput(mgrs.forward([point.lng, point.lat]))
+      } catch {
+        setMgrsInput('')
+      }
+    } else if (coordType === 'utm') {
+      // UTM formatı için örnek: Zone, Easting, Northing
+      setUtmInput(latLngToUTM(point.lat, point.lng))
+    } else if (coordType === 'dms') {
+      setDmsInput(latLngToDMS(point.lat, point.lng))
+    } else if (coordType === 'dm') {
+      setDmInput(latLngToDM(point.lat, point.lng))
+    }
+  }, [coordType, point])
+
+  // Dönüşüm fonksiyonları
+  function latLngToUTM(lat: number, lng: number): string {
+    // Basit UTM string (dummy, gerçek dönüşüm eklenebilir)
+    return `${lat.toFixed(5)},${lng.toFixed(5)}`
+  }
+  function latLngToDMS(lat: number, lng: number): string {
+    // Basit DMS string (dummy, gerçek dönüşüm eklenebilir)
+    return `${toDMS(lat)} ${toDMS(lng)}`
+  }
+  function latLngToDM(lat: number, lng: number): string {
+    // Basit DM string (dummy, gerçek dönüşüm eklenebilir)
+    return `${toDM(lat)} ${toDM(lng)}`
+  }
+  function toDMS(deg: number): string {
+    const d = Math.floor(deg)
+    const minFloat = Math.abs((deg - d) * 60)
+    const m = Math.floor(minFloat)
+    const s = ((minFloat - m) * 60).toFixed(2)
+    return `${d}°${m}'${s}"`
+  }
+  function toDM(deg: number): string {
+    const d = Math.floor(deg)
+    const m = ((deg - d) * 60).toFixed(4)
+    return `${d}°${m}'`
+  }
+
+  const getPOIIcon = (type: string): string => {
+    switch (type) {
+      case 'supermarket':
+      case 'convenience':
+      case 'grocery':
+        return '🛒'
+      case 'restaurant':
+        return '🍽️'
+      case 'cafe':
+        return '☕'
+      case 'bank':
+        return '🏦'
+      case 'atm':
+        return '💳'
+      case 'hospital':
+        return '🏥'
+      case 'pharmacy':
+        return '💊'
+      case 'school':
+      case 'university':
+        return '🎓'
+      case 'police':
+        return '👮'
+      case 'fire_station':
+        return '🚒'
+      case 'post_office':
+        return '📮'
+      case 'fuel':
+        return '⛽'
+      case 'hotel':
+        return '🏨'
+      case 'attraction':
+      case 'museum':
+        return '🏛️'
+      case 'office':
+        return '🏢'
+      default:
+        return '📍'
+    }
+  }
+
   return (
     <div className="app-shell">
       {infoBlob && (
@@ -1065,14 +1451,21 @@ export default function APP() {
       )}
       {(() => {
         const hasValidPoint = !!point && !addrInvalid
-        const [isOpened, setIsOpened] = useState(true);
+        const [isOpened, setIsOpened] = useState(true)
         return (
           <aside className={`app-sidebar${!hasValidPoint ? ' empty' : ''}`}>
-            <div className="sidebar-top-control-area" style={{
-              display: !hasValidPoint ? 'none' : 'flex',
-            }} onClick={() => setIsOpened(!isOpened)}>
+            <div
+              className="sidebar-top-control-area"
+              style={{
+                display: !hasValidPoint ? 'none' : 'flex',
+              }}
+              onClick={() => setIsOpened(!isOpened)}
+            >
               <span>{t('sidebar.title')}</span>
-              <button className={`expand-toggle ${isOpened ? 'opened' : 'closed'}`} onClick={() => setIsOpened(!isOpened)}>
+              <button
+                className={`expand-toggle ${isOpened ? 'opened' : 'closed'}`}
+                onClick={() => setIsOpened(!isOpened)}
+              >
                 <MdKeyboardArrowUp />
               </button>
             </div>
@@ -1104,20 +1497,175 @@ export default function APP() {
             {hasValidPoint && (
               <>
                 {!result && (
-                  <div className={`sidebar-select-side${!isOpened ? ' collapsed' : ' expanded'}`}>
-                    <div className={`sidebar-select main${!isOpened ? ' collapsed' : ' expanded'}`}>
+                  <div
+                    className={`sidebar-select-side${
+                      !isOpened ? ' collapsed' : ' expanded'
+                    }`}
+                  >
+                    <div
+                      className={`sidebar-select main${
+                        !isOpened ? ' collapsed' : ' expanded'
+                      }`}
+                    >
                       <div className="sidebar-section location-block">
-                        <h3>{t('app.location.title')}</h3>
-                        <div className="kv">
-                          <div>
-                            <span>{t('app.lat')}</span>
-                            <strong>{point.lat}</strong>
-                          </div>
-                          <div>
-                            <span>{t('app.lng')}</span>
-                            <strong>{point.lng}</strong>
-                          </div>
+                        <div className="location-header">
+                          <h3>{t('app.location.title')}</h3>
+                          <button
+                            type="button"
+                            className="coord-type-btn"
+                            onClick={() => setCoordModalOpen(true)}
+                          >
+                            {coordType === 'latlon'
+                              ? t('app.coord.latlon')
+                              : coordType === 'mgrs'
+                              ? t('app.coord.mgrs')
+                              : coordType === 'utm'
+                              ? 'UTM'
+                              : coordType === 'dms'
+                              ? 'dd°mm\'ss.s"'
+                              : coordType === 'dm'
+                              ? "dd°mm.mmm'"
+                              : coordType}
+                          </button>
                         </div>
+                        <CoordTypeModal
+                          open={coordModalOpen}
+                          value={coordType}
+                          onSelect={(type) => {
+                            setCoordType(type)
+                            setCoordModalOpen(false)
+                          }}
+                          onClose={() => setCoordModalOpen(false)}
+                        />
+                        {/* Koordinat türüne göre input alanı göster */}
+                        {coordType === 'latlon' && (
+                          <div className="latlon-container">
+                            <div style={{display: "flex",flexDirection: "row", gap: ".75rem"}}>
+                              <input
+                                type="text"
+                                value={latInput}
+                                onChange={(e) => setLatInput(e.target.value)}
+                                placeholder={t('app.lat')}
+                                className="lat-input"
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') handleLatLngConvert()
+                                }}
+                              />
+                              <input
+                                type="text"
+                                value={lngInput}
+                                onChange={(e) => setLngInput(e.target.value)}
+                                placeholder={t('app.lng')}
+                                className="lng-input"
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') handleLatLngConvert()
+                                }}
+                              />
+                            </div>
+                            <button
+                              type="button"
+                              onClick={handleLatLngConvert}
+                              className="coord-convert-btn"
+                              disabled={!latInput.trim() || !lngInput.trim()}
+                              style={{
+                                width: "100%",
+                                textAlign: "center",
+                              }}
+                            >
+                              {t('app.convert')}
+                            </button>
+                          </div>
+                        )}
+                        {coordType === 'mgrs' && (
+                          <div className="mgrs-container">
+                            <input
+                              type="text"
+                              value={mgrsInput}
+                              onChange={(e) =>
+                                setMgrsInput(e.target.value.toUpperCase())
+                              }
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleMgrsConvert()
+                              }}
+                              placeholder={t('app.coord.mgrsPlaceholder')}
+                              className="mgrs-input"
+                            />
+                            <button
+                              type="button"
+                              onClick={handleMgrsConvert}
+                              className="mgrs-convert-btn"
+                              disabled={!mgrsInput.trim()}
+                            >
+                              {t('app.convert')}
+                            </button>
+                          </div>
+                        )}
+                        {coordType === 'utm' && (
+                          <div className="utm-container">
+                            <input
+                              type="text"
+                              value={utmInput}
+                              onChange={(e) => setUtmInput(e.target.value)}
+                              placeholder="UTM (Zone, Easting, Northing)"
+                              className="utm-input"
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleUtmConvert()
+                              }}
+                            />
+                            <button
+                              type="button"
+                              onClick={handleUtmConvert}
+                              className="coord-convert-btn"
+                              disabled={!utmInput.trim()}
+                            >
+                              {t('app.convert')}
+                            </button>
+                          </div>
+                        )}
+                        {coordType === 'dms' && (
+                          <div className="dms-container">
+                            <input
+                              type="text"
+                              value={dmsInput}
+                              onChange={(e) => setDmsInput(e.target.value)}
+                              placeholder={'DMS (dd°mm\'ss.s")'}
+                              className="dms-input"
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleDmsConvert()
+                              }}
+                            />
+                            <button
+                              type="button"
+                              onClick={handleDmsConvert}
+                              className="coord-convert-btn"
+                              disabled={!dmsInput.trim()}
+                            >
+                              {t('app.convert')}
+                            </button>
+                          </div>
+                        )}
+                        {coordType === 'dm' && (
+                          <div className="dm-container">
+                            <input
+                              type="text"
+                              value={dmInput}
+                              onChange={(e) => setDmInput(e.target.value)}
+                              placeholder="DM (dd°mm.mmm')"
+                              className="dm-input"
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleDmConvert()
+                              }}
+                            />
+                            <button
+                              type="button"
+                              onClick={handleDmConvert}
+                              className="coord-convert-btn"
+                              disabled={!dmInput.trim()}
+                            >
+                              {t('app.convert')}
+                            </button>
+                          </div>
+                        )}
                       </div>
                       <div className="sidebar-section date-block">
                         <h3>{t('app.date')}</h3>
@@ -1159,11 +1707,16 @@ export default function APP() {
                 )}
                 {result && (
                   <>
-                    <div className={`results ${isOpened ? 'opened': 'closed'}`}>
+                    <div
+                      className={`results ${isOpened ? 'opened' : 'closed'}`}
+                    >
                       <div className="sidebar-header">
                         <h3>{t('app.results.title')}</h3>
                         <div className="reload">
-                          <button className="reload-btn" onClick={() => setResult(null)}>
+                          <button
+                            className="reload-btn"
+                            onClick={() => setResult(null)}
+                          >
                             <TbReload />
                           </button>
                         </div>
@@ -1216,7 +1769,9 @@ export default function APP() {
                         </div>
                         <button
                           type="button"
-                          className={`reliability-toggle ${showReliability ? 'active' : ''}`}
+                          className={`reliability-toggle ${
+                            showReliability ? 'active' : ''
+                          }`}
                           aria-pressed={showReliability}
                           onClick={() => setShowReliability(!showReliability)}
                           style={{ marginLeft: '.4rem' }}
@@ -1224,6 +1779,24 @@ export default function APP() {
                           {showReliability
                             ? t('app.results.showReliability')
                             : t('app.results.showValues')}
+                        </button>
+                        <button
+                          type="button"
+                          className={`reliability-toggle ${
+                            showPOIs ? 'active' : ''
+                          }`}
+                          aria-pressed={showPOIs}
+                          onClick={() => {
+                            setShowPOIs(!showPOIs)
+                            if (!showPOIs && point) {
+                              fetchPOIsAroundPoint(point)
+                            } else if (showPOIs) {
+                              setPOIData([])
+                            }
+                          }}
+                          style={{ marginLeft: '.4rem' }}
+                        >
+                          {showPOIs ? 'POI Gizle' : 'POI Göster'}
                         </button>
                       </div>
                       <div className="readable-summary">
@@ -1638,9 +2211,22 @@ export default function APP() {
                 })
               ) : adviceTranslating ? (
                 <div className="ai-insight">
-                  <div className="ai-insight-val" style={{display: 'flex', alignItems: 'center', gap: '12px', color: '#999'}}>
-                    <AiOutlineLoading className="spin" style={{fontSize: '20px'}} />
-                    <span style={{fontSize: 16}}>{language === 'tr' ? 'Çeviriliyor...' : 'Translating...'}</span>
+                  <div
+                    className="ai-insight-val"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      color: '#999',
+                    }}
+                  >
+                    <AiOutlineLoading
+                      className="spin"
+                      style={{ fontSize: '20px' }}
+                    />
+                    <span style={{ fontSize: 16 }}>
+                      {language === 'tr' ? 'Çeviriliyor...' : 'Translating...'}
+                    </span>
                   </div>
                 </div>
               ) : adviceParts.length ? (
@@ -1691,6 +2277,22 @@ export default function APP() {
               icon={markerIcon}
             />
           )}
+          {showPOIs && poiData.map((poi) => {
+            const poiIcon = L.divIcon({
+              className: `poi-marker poi-${poi.type}`,
+              html: `<div class="poi-icon">${getPOIIcon(poi.type)}</div>`,
+              iconSize: [20, 20],
+              iconAnchor: [10, 10],
+            })
+            return (
+              <Marker
+                key={poi.id}
+                position={[poi.lat, poi.lon]}
+                icon={poiIcon}
+                title={`${poi.name} (${poi.type})`}
+              />
+            )
+          })}
           {point && activeMetric && metricsEnabled[activeMetric] && result && (
             <MetricOverlay
               metric={activeMetric}
