@@ -1615,6 +1615,7 @@ body.preload .addr-display:before {
     width: 15px;
     height: 15px;
   }
+  
   .readable-list li .val {
     font-size: 1rem;
   }
