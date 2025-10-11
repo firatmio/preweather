@@ -12,7 +12,7 @@ import {
   FaWind,
 } from 'react-icons/fa6';
 import { GiFleshyMass } from 'react-icons/gi';
-import { MdSunny } from 'react-icons/md';
+import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdSunny } from 'react-icons/md';
 import { PiSparkleFill, PiSunHorizonBold } from 'react-icons/pi';
 import { TbReload } from 'react-icons/tb';
 import { TiArrowLeftThick } from 'react-icons/ti';
@@ -1065,8 +1065,16 @@ export default function APP() {
       )}
       {(() => {
         const hasValidPoint = !!point && !addrInvalid
+        const [isOpened, setIsOpened] = useState(true);
         return (
           <aside className={`app-sidebar${!hasValidPoint ? ' empty' : ''}`}>
+            <div className="sidebar-top-control-area" style={{
+              display: !hasValidPoint ? 'none' : 'flex',
+            }} onClick={() => setIsOpened(!isOpened)}>
+              <button className={`expand-toggle ${isOpened ? 'opened' : 'closed'}`} onClick={() => setIsOpened(!isOpened)}>
+                <MdKeyboardArrowUp />
+              </button>
+            </div>
             {!hasValidPoint && (
               <div className="empty-center">
                 <div className="select-core">
@@ -1095,8 +1103,8 @@ export default function APP() {
             {hasValidPoint && (
               <>
                 {!result && (
-                  <div className="sidebar-select-side">
-                    <div className="sidebar-section main">
+                  <div className={`sidebar-select-side${!isOpened ? ' collapsed' : ' expanded'}`}>
+                    <div className={`sidebar-select main${!isOpened ? ' collapsed' : ' expanded'}`}>
                       <div className="sidebar-section location-block">
                         <h3>{t('app.location.title')}</h3>
                         <div className="kv">
