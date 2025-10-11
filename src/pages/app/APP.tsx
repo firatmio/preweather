@@ -305,6 +305,7 @@ export default function APP() {
 
   useEffect(() => {
     try {
+      setCoordSystem("latlon")
       localStorage.setItem('pw.coordSystem', coordSystem)
     } catch {}
   }, [coordSystem])
